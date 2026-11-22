@@ -1,0 +1,1318 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#080d12">
+<title>FoodNova — See What Remains</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+:root{--bg:#080b0b;--surface:#101716;--surface2:#151f1d;--surface3:#1b2824;--line:rgba(205,235,216,.12);--line2:rgba(205,235,216,.2);--text:#f3f8f3;--muted:#8e9f96;--muted2:#b5c3bb;--lime:#c9ff62;--lime2:#a8e83f;--mint:#67e8ba;--blue:#78c9ff;--violet:#bca1ff;--amber:#ffd27a;--red:#ff8c83;--shadow:0 24px 80px rgba(0,0,0,.36);--mono:'DM Mono',ui-monospace,monospace;--sans:'Manrope',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif}
+*{box-sizing:border-box}html{color-scheme:dark;scroll-behavior:smooth}body{margin:0;min-height:100vh;color:var(--text);font:14px/1.55 var(--sans);background:radial-gradient(850px 500px at 7% -8%,rgba(115,183,129,.13),transparent 66%),radial-gradient(650px 460px at 100% 13%,rgba(141,117,229,.11),transparent 63%),linear-gradient(180deg,#0a100e 0%,#080b0b 54%,#090e0c 100%);overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:linear-gradient(rgba(204,255,224,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(204,255,224,.035) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 82%)}button,input{font:inherit}button{cursor:pointer}.shell{position:relative;z-index:1;width:min(1240px,100%);margin:0 auto;padding:24px 26px 54px}.topbar{height:58px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:48px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{position:relative;width:43px;height:43px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,#d6ff8a,#91d83e);color:#10190c;font-size:21px;font-weight:900;box-shadow:0 7px 30px rgba(187,255,93,.18);overflow:hidden}.brand-mark:after{content:"";position:absolute;width:23px;height:23px;border:1.5px solid rgba(15,30,10,.35);border-radius:50%;transform:rotate(-35deg) scaleX(.58)}.brand-name{font-weight:850;font-size:17px;letter-spacing:-.045em}.brand-name span{color:var(--lime)}.brand-sub{font:9px var(--mono);letter-spacing:.19em;text-transform:uppercase;color:var(--muted);margin-top:2px}.nav-right{display:flex;align-items:center;gap:10px}.nav-label{font:10px var(--mono);letter-spacing:.14em;color:#718178;text-transform:uppercase;margin-right:8px}.top-status{display:flex;align-items:center;gap:9px;padding:9px 13px;border:1px solid var(--line);background:rgba(15,24,20,.72);border-radius:999px;color:var(--muted2);font:10px var(--mono);letter-spacing:.02em;backdrop-filter:blur(12px)}.dot{width:7px;height:7px;flex:0 0 7px;border-radius:50%;background:#64756b}.dot.on{background:var(--lime);box-shadow:0 0 0 4px rgba(201,255,98,.12),0 0 14px rgba(201,255,98,.6)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 255px;align-items:end;gap:28px;margin-bottom:34px}.eyebrow{display:flex;align-items:center;gap:10px;color:var(--mint);font:10px var(--mono);letter-spacing:.19em;text-transform:uppercase;margin-bottom:16px}.eyebrow:before{content:"";width:24px;height:1px;background:var(--mint)}.hero h1{margin:0;max-width:800px;font-size:clamp(37px,5.5vw,67px);line-height:.99;letter-spacing:-.075em;font-weight:800}.hero h1 .accent{color:var(--lime);text-shadow:0 0 34px rgba(201,255,98,.13)}.hero p{max-width:685px;color:var(--muted2);font-size:14px;line-height:1.75;margin:19px 0 0}.hero-card{position:relative;min-height:142px;padding:18px;border:1px solid rgba(201,255,98,.2);border-radius:20px;background:linear-gradient(145deg,rgba(35,55,40,.78),rgba(17,28,24,.62));overflow:hidden;box-shadow:var(--shadow)}.hero-card:after{content:"";position:absolute;width:150px;height:150px;border:1px solid rgba(201,255,98,.11);border-radius:50%;right:-35px;top:23px;box-shadow:0 0 0 18px rgba(201,255,98,.025),0 0 0 38px rgba(201,255,98,.02)}.hero-card-kicker{font:9px var(--mono);color:var(--muted);letter-spacing:.16em}.hero-card-main{font-size:18px;font-weight:800;letter-spacing:-.04em;margin-top:12px}.hero-card-foot{display:flex;align-items:center;gap:7px;font:9px var(--mono);color:var(--lime);margin-top:9px;letter-spacing:.08em}.hero-card-foot:before{content:"";width:6px;height:6px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+.grid{display:grid;grid-template-columns:minmax(0,1.04fr) minmax(340px,.96fr);gap:18px;align-items:start}.panel{position:relative;border:1px solid var(--line);border-radius:23px;background:linear-gradient(155deg,rgba(20,30,27,.96),rgba(12,19,17,.97));box-shadow:var(--shadow);overflow:hidden}.panel:before{content:"";position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(201,255,98,.26),transparent)}.panel-head{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--line)}.head-left{display:flex;align-items:center;gap:11px}.head-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:rgba(201,255,98,.1);color:var(--lime);font-size:15px}.panel-head h2{margin:0;font-size:14px;font-weight:800;letter-spacing:-.025em}.step{color:#829188;font:9px var(--mono);letter-spacing:.14em;text-transform:uppercase}.panel-body{padding:21px 22px}.security{display:flex;gap:11px;align-items:flex-start;padding:13px 14px;border-radius:13px;border:1px solid rgba(255,210,122,.2);background:linear-gradient(110deg,rgba(77,57,24,.25),rgba(47,39,23,.2));color:#cbbd9d;font-size:10px;line-height:1.6;margin-bottom:20px}.security:before{content:"!";display:grid;place-items:center;flex:0 0 19px;width:19px;height:19px;border-radius:50%;background:rgba(255,210,122,.13);color:var(--amber);font-weight:900}.security strong{color:#ffe1a4}.field-label{display:flex;justify-content:space-between;align-items:center;color:#d9e5dc;font-size:11px;font-weight:800;letter-spacing:.02em;margin-bottom:8px}.field-label small{font:9px var(--mono);color:var(--muted)}.api-row{display:flex;gap:8px}.api-input{width:100%;min-width:0;flex:1;background:#090f0d;border:1px solid var(--line2);border-radius:11px;padding:12px 13px;color:var(--text);outline:none;font:11px var(--mono);transition:border-color .2s,box-shadow .2s}.api-input::placeholder{color:#617169}.api-input:focus{border-color:rgba(201,255,98,.65);box-shadow:0 0 0 3px rgba(201,255,98,.09)}.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid transparent;border-radius:11px;padding:11px 15px;font-size:11px;font-weight:850;letter-spacing:.005em;transition:transform .18s,filter .18s,background .18s,border-color .18s;white-space:nowrap}.btn:active{transform:translateY(1px) scale(.99)}.btn-primary{background:linear-gradient(135deg,#d5ff83,#a9e948);color:#111b0d;box-shadow:0 7px 25px rgba(176,238,77,.13)}.btn-primary:hover{filter:brightness(1.06);box-shadow:0 9px 32px rgba(176,238,77,.2)}.btn-secondary{background:rgba(132,180,149,.1);border-color:rgba(159,204,172,.17);color:#dcece0}.btn-secondary:hover{background:rgba(132,180,149,.17);border-color:rgba(159,204,172,.3)}.btn-ghost{background:rgba(255,255,255,.025);border-color:var(--line);color:var(--muted2)}.btn-ghost:hover{color:var(--text);border-color:var(--line2)}.btn:disabled{opacity:.42;cursor:not-allowed;box-shadow:none}.hint{color:var(--muted);font-size:10px;margin-top:8px}.key-state{font:9px var(--mono);color:#91a198;margin-top:10px;display:flex;align-items:center;gap:8px}.divider{height:1px;background:var(--line);margin:20px 0}.dropzone{position:relative;min-height:205px;display:grid;place-items:center;text-align:center;padding:21px;border:1px dashed rgba(173,216,184,.28);border-radius:17px;background:radial-gradient(ellipse at 50% 0%,rgba(201,255,98,.07),transparent 68%),linear-gradient(145deg,rgba(22,37,30,.75),rgba(11,19,16,.85));overflow:hidden;transition:border-color .2s,background .2s,transform .2s}.dropzone:before,.dropzone:after{content:"";position:absolute;width:17px;height:17px;border-color:rgba(201,255,98,.42);border-style:solid;pointer-events:none}.dropzone:before{left:12px;top:12px;border-width:1px 0 0 1px}.dropzone:after{right:12px;bottom:12px;border-width:0 1px 1px 0}.dropzone.drag{border-color:var(--lime);background:rgba(201,255,98,.08);transform:scale(.995)}.dropzone-inner{position:relative;z-index:1}.drop-icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;margin:0 auto 12px;color:var(--lime);font-size:24px;background:linear-gradient(145deg,rgba(201,255,98,.16),rgba(103,232,186,.08));border:1px solid rgba(201,255,98,.22);box-shadow:0 0 26px rgba(201,255,98,.08)}.dropzone h3{margin:0 0 5px;font-size:14px;font-weight:800;letter-spacing:-.02em}.dropzone p{margin:0;color:var(--muted);font-size:10px}.drop-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px}.preview-wrap{position:relative;background:#050806;border-radius:16px;overflow:hidden;border:1px solid rgba(193,226,200,.18);margin-top:14px;display:none;box-shadow:0 15px 32px rgba(0,0,0,.25)}.preview-wrap img{display:block;width:100%;height:auto;max-height:560px;object-fit:contain}.preview-wrap svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}.preview-caption{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:10px;color:var(--muted);font:9px var(--mono)}.main-action{width:100%;margin-top:15px;padding:15px;font-size:12px;min-height:49px}.main-action:not(:disabled){animation:softPulse 3.6s ease-in-out infinite}.main-action:disabled{animation:none}.main-action .arrow{font-size:17px;line-height:0}.tiny-note{color:#85968c;font-size:9px;line-height:1.65;margin:11px 2px 0;text-align:center}.right-col{display:grid;gap:18px}.empty-state{text-align:center;padding:48px 20px 52px;color:var(--muted)}.empty-orb{position:relative;width:82px;height:82px;border:1px solid rgba(201,255,98,.25);border-radius:26px;display:grid;place-items:center;color:var(--lime);font-size:30px;margin:0 auto 17px;background:radial-gradient(circle,rgba(201,255,98,.13),rgba(201,255,98,.025));box-shadow:0 0 0 10px rgba(201,255,98,.025),0 0 40px rgba(201,255,98,.07)}.empty-orb:after{content:"";position:absolute;inset:9px;border:1px dashed rgba(201,255,98,.22);border-radius:19px;animation:orbit 18s linear infinite}.empty-state h3{margin:0 0 7px;color:#e9f2eb;font-size:16px;font-weight:800;letter-spacing:-.03em}.empty-state p{margin:0 auto;max-width:300px;font-size:11px;line-height:1.7}.loading{padding:54px 22px;text-align:center;color:var(--muted)}.spinner{position:relative;width:46px;height:46px;border-radius:50%;border:1px solid rgba(201,255,98,.18);border-top-color:var(--lime);border-right-color:var(--mint);animation:spin .8s linear infinite;margin:0 auto 18px}.spinner:after{content:"";position:absolute;inset:7px;border:1px dashed rgba(201,255,98,.23);border-radius:50%;animation:spin 3s linear infinite reverse}.loading strong{display:block;color:var(--text);font-size:12px}.loading p{font:9px var(--mono);color:var(--muted);margin:8px 0 0}.results{display:none}.metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-bottom:14px}.metric{position:relative;min-width:0;background:linear-gradient(145deg,rgba(27,42,34,.75),rgba(12,21,17,.9));border:1px solid var(--line);border-radius:15px;padding:15px;overflow:hidden}.metric:first-child:after{content:"";position:absolute;width:70px;height:70px;right:-27px;top:-28px;border-radius:50%;background:rgba(103,232,186,.08)}.metric:last-child:after{content:"";position:absolute;width:70px;height:70px;right:-27px;top:-28px;border-radius:50%;background:rgba(201,255,98,.09)}.metric .k{font:9px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:.13em}.metric .v{position:relative;z-index:1;font-size:31px;font-weight:850;letter-spacing:-.07em;margin-top:5px;color:var(--lime)}.metric .s{font-size:9px;color:#8b9a91;margin-top:2px}.summary{padding:14px 15px;border-radius:13px;background:linear-gradient(105deg,rgba(103,232,186,.09),rgba(201,255,98,.045));border:1px solid rgba(103,232,186,.16);font-size:11px;line-height:1.7;color:#d9e9de;margin-bottom:17px}.list-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:5px 0 10px}.list-head h3{margin:0;font-size:12px;font-weight:850}.list-head span{color:var(--muted);font:9px var(--mono);text-align:right}.food-list{display:grid;gap:8px}.food-row{display:grid;grid-template-columns:10px minmax(0,1fr) auto;align-items:center;gap:10px;padding:12px 13px;background:rgba(7,14,11,.58);border:1px solid rgba(188,218,195,.12);border-radius:12px;transition:border-color .2s,transform .2s}.food-row:hover{border-color:rgba(201,255,98,.27);transform:translateX(2px)}.swatch{width:9px;height:9px;border-radius:3px;box-shadow:0 0 12px currentColor}.food-name{font-weight:800;font-size:11px;text-transform:capitalize}.food-meta{color:#87978d;font:9px var(--mono);margin-top:3px}.food-pct{font-size:13px;font-weight:850;text-align:right;color:#e4f0e6}.food-status{font:8px var(--mono);color:var(--muted);text-align:right;margin-top:2px}.result-note{font-size:9px;line-height:1.6;color:var(--muted);padding:12px 2px 0}.result-actions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.result-actions .btn{flex:1;font-size:10px}.disclaimer{margin-top:15px;padding:11px 13px;background:rgba(255,255,255,.025);border:1px solid var(--line);border-radius:11px;color:#87958c;font-size:9px;line-height:1.6}.model-pill{font:9px var(--mono);color:var(--mint);border:1px solid rgba(103,232,186,.18);background:rgba(103,232,186,.05);border-radius:999px;padding:6px 9px;white-space:nowrap}.workflow{display:grid;gap:13px}.workflow-item{display:grid;grid-template-columns:29px 1fr;gap:11px;align-items:start;color:var(--muted);font-size:10px;line-height:1.65}.workflow-num{width:27px;height:27px;display:grid;place-items:center;border:1px solid rgba(201,255,98,.22);border-radius:9px;color:var(--lime);background:rgba(201,255,98,.06);font:10px var(--mono)}.workflow-item b{color:var(--text);font-size:11px}.error{padding:12px 13px;border-radius:12px;background:rgba(111,34,31,.28);border:1px solid rgba(255,140,131,.32);color:#ffd1ca;font-size:10px;line-height:1.6;margin-top:13px;display:none}.footer{display:flex;justify-content:space-between;gap:14px;margin-top:26px;padding:0 3px;color:#627269;font:9px var(--mono);letter-spacing:.04em}.footer a{color:#a2c7a9;text-decoration:none}.footer a:hover{color:var(--lime)}
+@keyframes spin{to{transform:rotate(360deg)}}@keyframes orbit{to{transform:rotate(360deg)}}@keyframes softPulse{0%,100%{box-shadow:0 7px 25px rgba(176,238,77,.12)}50%{box-shadow:0 8px 34px rgba(176,238,77,.22)}}
+@media(max-width:900px){.shell{padding:19px 18px 42px}.topbar{margin-bottom:37px}.grid{grid-template-columns:minmax(0,1fr) minmax(300px,.9fr);gap:13px}.hero{grid-template-columns:1fr 205px;gap:15px}.panel-head{padding:17px}.panel-body{padding:17px}.hero-card{min-height:130px}.nav-label{display:none}}
+@media(max-width:720px){.shell{padding:15px 13px 34px}.topbar{margin-bottom:31px;height:48px}.brand-mark{width:39px;height:39px}.brand-name{font-size:16px}.top-status{padding:8px 10px;font-size:9px}.hero{display:block;margin-bottom:24px}.hero h1{font-size:clamp(38px,10vw,55px)}.hero p{font-size:12px;margin-top:14px}.hero-card{display:none}.grid{grid-template-columns:1fr;gap:14px}.right-col{grid-row:auto}.panel{border-radius:19px}.panel-head{padding:15px 16px}.panel-body{padding:16px}.security{font-size:9px}.dropzone{min-height:185px}.empty-state{padding:37px 17px}.loading{padding:38px 18px}.footer{flex-direction:column;gap:8px;margin-top:20px}}
+@media(max-width:400px){.brand-sub{font-size:8px}.top-status{font-size:8px;gap:6px}.metrics{gap:7px}.metric{padding:12px}.metric .v{font-size:27px}.api-row{flex-direction:column}.api-row .btn{width:100%}.drop-actions{gap:7px}.drop-actions .btn{padding:10px 12px;font-size:10px}.list-head{align-items:flex-start}.model-pill{font-size:8px;padding:5px 7px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* FOODNOVA — editorial product redesign */
+:root{
+ --bg:#f4f0e6;--surface:#fffdf8;--surface2:#f9f6ee;--surface3:#f0eadc;
+ --line:#e8e0d0;--line2:#d8ceba;--text:#202a21;--muted:#8b8d7e;--muted2:#626b5e;
+ --lime:#d2e66d;--lime2:#bed45c;--mint:#6f9976;--blue:#6a9eaa;--violet:#9582aa;
+ --amber:#d99646;--red:#bd6652;--shadow:0 18px 50px rgba(49,52,34,.08);
+ --mono:'DM Sans',ui-sans-serif,system-ui,sans-serif;--sans:'DM Sans',ui-sans-serif,system-ui,sans-serif;
+}
+html{color-scheme:light;background:var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.6}
+body:before{display:none}
+.shell{width:min(1280px,100%);padding:26px 34px 56px}
+.topbar{height:66px;margin-bottom:52px;border-bottom:1px solid #e5ddce;padding-bottom:18px}
+.brand{gap:13px}.brand-mark{width:44px;height:44px;border-radius:50%;background:#244b37;color:#f4f0e6;box-shadow:none;font-family:Fraunces,serif;font-size:21px}
+.brand-mark:after{width:23px;height:23px;border-color:rgba(244,240,230,.55)}
+.brand-name{font-size:20px;letter-spacing:-.06em;color:#24352a}.brand-name span{color:#9b6c3e}
+.brand-sub{font:700 9px var(--sans);letter-spacing:.15em;color:#9a998b}
+.nav-label{font:700 9px var(--sans);letter-spacing:.12em;color:#929384}
+.top-status{border:1px solid #e4ddce;background:#fffdf8;color:#657264;border-radius:999px;padding:9px 14px;font:600 10px var(--sans);backdrop-filter:none}
+.dot{background:#c6c4b7}.dot.on{background:#5f9b68;box-shadow:0 0 0 4px rgba(95,155,104,.12)}
+.hero{grid-template-columns:minmax(0,1fr) 310px;gap:36px;align-items:center;margin-bottom:38px}
+.eyebrow{font:800 10px var(--sans);letter-spacing:.16em;color:#8b7655;margin-bottom:18px}.eyebrow:before{width:28px;background:#c38b52}
+.hero h1{font-family:Fraunces,Georgia,serif;font-weight:600;font-size:clamp(46px,6.4vw,76px);line-height:.99;letter-spacing:-.055em;color:#24372b;max-width:850px}
+.hero h1 .accent{color:#b87645;text-shadow:none}
+.hero p{color:#73796d;font-size:14px;line-height:1.8;max-width:630px;margin-top:20px}
+.hero-card{min-height:190px;padding:23px 23px 22px;border:0;border-radius:24px;background:linear-gradient(145deg,#244b37,#173b2b);box-shadow:0 20px 40px rgba(32,65,45,.14);isolation:isolate}
+.hero-card:before{content:"";position:absolute;z-index:-1;width:180px;height:180px;right:12px;top:8px;border-radius:50%;background:radial-gradient(circle at 48% 45%,#f4f0e6 0 31%,#d4cbb6 32% 34%,#fffdf8 35% 47%,#c5bba6 48% 50%,#f4f0e6 51% 56%,transparent 57%);transform:rotate(-18deg);opacity:.97}
+.hero-card:after{content:"🍚  🫘  🥬";position:absolute;right:22px;top:76px;font-size:24px;letter-spacing:2px;filter:drop-shadow(0 3px 3px rgba(33,46,34,.14));border:0;border-radius:0;box-shadow:none;width:auto;height:auto}
+.hero-card-kicker{font:800 9px var(--sans);color:#c9d6bd;letter-spacing:.16em}
+.hero-card-main{font-family:Fraunces,Georgia,serif;font-size:23px;line-height:1.1;font-weight:600;letter-spacing:-.02em;margin-top:14px;color:#fffdf5;position:relative;z-index:2}
+.hero-card-foot{font:800 9px var(--sans);color:#d2e66d;letter-spacing:.12em;margin-top:16px;position:relative;z-index:2}
+.hero-card-foot:before{background:#d2e66d;box-shadow:none}
+.grid{grid-template-columns:minmax(0,1.02fr) minmax(340px,.98fr);gap:20px;align-items:start}
+.panel{border:1px solid #e8e0d0;border-radius:22px;background:#fffdf8;box-shadow:var(--shadow);overflow:hidden}
+.panel:before{display:none}
+.panel-head{padding:19px 22px;border-bottom:1px solid #eee8dc;background:#fffdf8}
+.head-left{gap:12px}.head-icon{width:34px;height:34px;border-radius:12px;background:#edf2e5;color:#315b3e;font-size:16px}
+.panel-head h2{font-size:14px;font-weight:800;letter-spacing:-.025em;color:#26382b}
+.step{font:800 9px var(--sans);color:#a19b8b;letter-spacing:.12em}
+.panel-body{padding:22px}
+.security{padding:12px 14px;border-radius:13px;border:1px solid #eadfc7;background:#faf4e7;color:#83765e;font-size:10px}
+.security:before{background:#f1e4c8;color:#a07837}.security strong{color:#76572d}
+.field-label{color:#39493b;font-size:11px;font-weight:800}.field-label small{font:700 9px var(--sans);color:#a29f91;letter-spacing:.08em}
+.api-row{gap:9px}.api-input{background:#f9f7f0;border:1px solid #e4ddce;border-radius:12px;padding:13px 14px;color:#24372b;font:12px var(--sans)}
+.api-input::placeholder{color:#aaa695}.api-input:focus{border-color:#7c9a70;box-shadow:0 0 0 3px rgba(101,145,92,.12)}
+.btn{border-radius:12px;padding:11px 15px;font-size:11px;font-weight:800;transition:transform .18s,filter .18s,background .18s,border-color .18s}
+.btn-primary{background:#315d40;color:#fffdf7;box-shadow:0 7px 17px rgba(41,83,54,.14)}
+.btn-primary:hover{filter:brightness(1.08);box-shadow:0 9px 22px rgba(41,83,54,.18)}
+.btn-secondary{background:#eef2e8;border-color:#e1e8d9;color:#34523b}.btn-secondary:hover{background:#e5eddc;border-color:#cedcc8}
+.btn-ghost{background:#fffdf8;border-color:#e5dece;color:#7b806f}.btn-ghost:hover{color:#314b36;border-color:#b8c5ad}
+.key-state{font:600 10px var(--sans);color:#8b9383}.divider{background:#eee8dc;margin:21px 0}
+.dropzone{min-height:218px;border:1.5px dashed #cbd5bf;border-radius:17px;background:linear-gradient(145deg,#f4f6ed,#faf8f1);transition:border-color .2s,background .2s,transform .2s}
+.dropzone:before,.dropzone:after{width:15px;height:15px;border-color:#8da67d}.dropzone.drag{border-color:#658c5f;background:#edf4e8}
+.drop-icon{width:52px;height:52px;border-radius:17px;margin-bottom:13px;color:#315d40;font-size:25px;background:#e6efde;border:1px solid #d9e5d0;box-shadow:none}
+.dropzone h3{font-family:Fraunces,Georgia,serif;font-size:20px;font-weight:600;letter-spacing:-.02em;color:#2d4433}.dropzone p{color:#8b8d7e;font-size:11px}
+.drop-actions{margin-top:17px}.preview-wrap{background:#17251c;border:1px solid #d9dfd2;border-radius:16px;box-shadow:none;margin-top:15px}
+.preview-wrap img{max-height:580px}.preview-caption{color:#8d907f;font:600 10px var(--sans)}
+.main-action{margin-top:16px;padding:16px;font-size:12px;min-height:52px;letter-spacing:.015em}.main-action:not(:disabled){animation:none}
+.tiny-note{color:#989889;font-size:10px;line-height:1.7}
+.right-col{display:grid;gap:20px}.empty-state{padding:46px 28px;text-align:center;background:linear-gradient(180deg,#fffdf8,#faf8f1)}
+.empty-orb{display:grid;place-items:center;width:68px;height:68px;margin:0 auto 16px;border-radius:22px;background:#edf2e6;color:#47734d;font-size:27px;box-shadow:0 7px 18px rgba(41,83,54,.07)}
+.empty-state h3{font-family:Fraunces,Georgia,serif;font-size:23px;font-weight:600;letter-spacing:-.025em;color:#2b3f30;margin:0 0 8px}
+.empty-state p{max-width:340px;margin:0 auto;color:#8a8d7f;font-size:11px;line-height:1.75}
+.loading{padding:48px 25px;text-align:center;background:#fffdf8;color:#304833}.spinner{border-color:#e5ecdf;border-top-color:#477a4e}.loading strong{font-size:14px;color:#365640}.loading p{font:800 9px var(--sans);letter-spacing:.12em;color:#999b8d}
+.metrics{gap:10px}.metric{border:1px solid #e9e4d8;border-radius:15px;background:#faf8f2;padding:15px}.metric .k{font:800 9px var(--sans);letter-spacing:.1em;text-transform:uppercase;color:#969585}.metric .v{font-family:Fraunces,Georgia,serif;font-size:34px;line-height:1.15;letter-spacing:-.04em;color:#2c5137}.metric .s{font-size:9px;color:#999889}
+.summary{border-left:3px solid #d4a36c;background:#faf5eb;color:#6c634f;border-radius:0 12px 12px 0;padding:12px 14px;font-size:11px}
+.list-head h3{color:#2e4433;font-size:12px}.list-head span{font:700 9px var(--sans);color:#999889}
+.food-row{border-bottom:1px solid #eee9df;padding:12px 0}.food-name{color:#2e4333}.food-meta{color:#909283}.food-pct{color:#a16d3e;font-weight:800}.swatch{border-radius:5px}
+.result-note{background:#f1f5ed;border:1px solid #e1e9dc;color:#64735e;border-radius:12px;padding:12px;font-size:10px}
+.result-actions{gap:9px}.disclaimer{color:#a09e90;font-size:9px;line-height:1.7}
+.workflow{display:grid;gap:15px}.workflow-item{display:flex;gap:13px;align-items:flex-start;color:#7f8677;font-size:10px;line-height:1.65}.workflow-num{width:29px;height:29px;flex:0 0 29px;display:grid;place-items:center;border:1px solid #dce5d5;border-radius:10px;color:#47744b;background:#f0f4eb;font:800 10px var(--sans)}.workflow-item b{color:#344c38;font-size:11px}
+.model-pill{border-radius:999px;padding:6px 10px;background:#f0f4eb;border:1px solid #e1e9dc;color:#63805f;font:800 9px var(--sans)}
+.error{background:#fbefeb;border:1px solid #efd3ca;color:#a65344;border-radius:12px;font-size:10px}
+.footer{margin-top:30px;padding-top:15px;border-top:1px solid #e5ddce;color:#aaa596;font:700 9px var(--sans);letter-spacing:.07em}.footer a{color:#658365}.footer a:hover{color:#315d40}
+@media(max-width:900px){.shell{padding:19px 20px 42px}.hero{grid-template-columns:minmax(0,1fr) 245px}.grid{grid-template-columns:minmax(0,1fr) minmax(290px,.92fr)}.panel-head{padding:16px 18px}.panel-body{padding:18px}}
+@media(max-width:720px){.shell{padding:14px 13px 30px}.topbar{margin-bottom:30px;height:54px;padding-bottom:13px}.brand-mark{width:39px;height:39px}.brand-name{font-size:18px}.hero{display:grid;grid-template-columns:1fr;gap:18px;margin-bottom:24px}.hero h1{font-size:clamp(43px,11vw,59px)}.hero p{font-size:12px;margin-top:14px}.hero-card{display:block;min-height:130px;padding:18px 20px}.hero-card:before{width:138px;height:138px;right:6px;top:-3px}.hero-card:after{top:49px;right:13px;font-size:20px}.hero-card-main{font-size:19px;margin-top:9px}.hero-card-foot{margin-top:11px}.grid{grid-template-columns:1fr;gap:14px}.right-col{grid-row:auto;gap:14px}.panel{border-radius:18px}.panel-head{padding:14px 15px}.panel-body{padding:15px}.security{font-size:9px}.dropzone{min-height:190px}.empty-state{padding:34px 17px}.loading{padding:38px 18px}.footer{flex-direction:column;gap:8px;margin-top:20px}}
+@media(max-width:400px){.brand-sub{font-size:8px}.top-status{font-size:8px;padding:7px 9px}.metrics{gap:7px}.metric{padding:12px}.metric .v{font-size:29px}.api-row{flex-direction:column}.api-row .btn{width:100%}.drop-actions{gap:7px}.drop-actions .btn{padding:10px 12px;font-size:10px}.model-pill{font-size:8px;padding:5px 7px}.hero-card{min-height:122px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* FOODNOVA VISION LAB — technical interface layer */
+:root{
+ --bg:#080b10;--surface:#0d131c;--surface2:#111b27;--surface3:#172536;
+ --line:rgba(153,184,220,.14);--line2:rgba(153,184,220,.26);
+ --text:#e8f0fa;--muted:#8292a8;--muted2:#b0bfd1;
+ --lime:#55e6bd;--lime2:#31c9a0;--mint:#55e6bd;--blue:#72baff;
+ --violet:#9a8cff;--amber:#ffca78;--red:#ff7885;
+ --shadow:0 18px 55px rgba(0,0,0,.34);
+ --mono:'Space Mono',ui-monospace,monospace;
+ --sans:'Space Grotesk',ui-sans-serif,system-ui,sans-serif
+}
+html{background:var(--bg);color-scheme:dark}
+body{background:linear-gradient(180deg,#090e16,#080b10 58%,#0a1018);font-family:var(--sans)}
+body:before{opacity:.22;background-size:32px 32px;background-image:linear-gradient(rgba(123,163,207,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(123,163,207,.045) 1px,transparent 1px);mask-image:linear-gradient(to bottom,black,transparent 92%)}
+.shell{width:min(1380px,100%);padding:20px 26px 42px}
+.topbar{height:54px;margin-bottom:34px;border-bottom:1px solid var(--line);padding-bottom:13px}
+.brand-mark{width:37px;height:37px;border-radius:9px;background:#142638;color:var(--mint);border:1px solid rgba(85,230,189,.3);box-shadow:none;font:700 17px var(--mono)}
+.brand-mark:after{width:18px;height:18px;border-radius:3px;border-color:rgba(85,230,189,.55);transform:rotate(45deg)}
+.brand-name{font:700 15px var(--mono);letter-spacing:.025em}.brand-name span{color:var(--mint)}
+.brand-sub{font:9px var(--mono);letter-spacing:.13em;color:#71839a}
+.nav-label,.step,.eyebrow{font:9px var(--mono);letter-spacing:.14em;color:#8297b1}
+.top-status{border:1px solid var(--line);background:#0d1621;border-radius:7px;font:9px var(--mono);letter-spacing:.08em;color:#a9bbcf;padding:8px 11px}
+.dot.on{background:var(--mint);box-shadow:0 0 0 3px rgba(85,230,189,.1),0 0 12px rgba(85,230,189,.35)}
+.hero{grid-template-columns:minmax(0,1fr) 245px;gap:22px;margin-bottom:22px;align-items:center}
+.eyebrow{margin-bottom:11px}.eyebrow:before{width:0}
+.hero h1{font:600 clamp(32px,4.5vw,51px)/1.04 var(--sans);letter-spacing:-.055em}
+.hero h1 .accent{color:var(--mint);text-shadow:none}
+.hero p{font-size:12px;line-height:1.65;color:var(--muted2);margin:11px 0 0;max-width:650px}
+.hero-card{min-height:106px;padding:13px 15px;border:1px solid rgba(85,230,189,.19);border-radius:10px;background:linear-gradient(135deg,#101e2a,#0c151f);box-shadow:none}
+.hero-card:after{width:95px;height:95px;right:-23px;top:7px;border-color:rgba(85,230,189,.1);box-shadow:0 0 0 13px rgba(85,230,189,.025),0 0 0 27px rgba(85,230,189,.018)}
+.hero-card-kicker,.hero-card-foot{font:9px var(--mono);letter-spacing:.1em;color:#8297b1}
+.hero-card-main{font:600 15px/1.35 var(--mono);letter-spacing:-.04em;margin-top:8px}
+.hero-card-foot{color:var(--mint);margin-top:7px}
+.grid{grid-template-columns:minmax(0,1.02fr) minmax(330px,.98fr);gap:13px}
+.panel{border:1px solid var(--line);border-radius:11px;background:linear-gradient(155deg,#0e1722,#0b1119);box-shadow:var(--shadow)}
+.panel:before{height:1px;background:linear-gradient(90deg,transparent,rgba(85,230,189,.23),transparent)}
+.panel-head{padding:13px 16px;border-bottom:1px solid var(--line);background:rgba(16,27,40,.45)}
+.head-left{gap:9px}.head-icon{width:28px;height:28px;border-radius:7px;background:#122a32;color:var(--mint);font:14px var(--mono)}
+.panel-head h2{font:600 12px var(--mono);letter-spacing:0}
+.step{font-size:8px}.panel-body{padding:16px}
+.api-setup,.engine-ready{border:1px solid var(--line);border-radius:8px;background:#0a111a;padding:12px}
+.setup-topline strong,.ready-copy strong{font:600 11px var(--mono)}
+.setup-topline small,.ready-copy small{font-size:10px;color:var(--muted)}
+.field-label{font:600 10px var(--mono);color:#c4d2e2}
+.field-label small{font:8px var(--mono);color:#71839a}
+.api-input{background:#080e15;border:1px solid var(--line2);border-radius:7px;font:10px var(--mono);padding:11px}
+.btn{border-radius:7px;font:600 10px var(--mono);padding:10px 13px;letter-spacing:0}
+.btn-primary{background:#17483f;color:#baffea;border:1px solid rgba(85,230,189,.42);box-shadow:none}
+.btn-primary:hover{background:#1b5a4d;filter:none;box-shadow:0 0 18px rgba(85,230,189,.09)}
+.btn-secondary{background:#142333;border:1px solid var(--line2);color:#c4d5e8}
+.btn-ghost{background:#0b131d;border:1px solid var(--line);color:#91a5bd}
+.security{background:#1c1a14;border:1px solid rgba(255,202,120,.2);border-radius:7px}
+.divider{background:var(--line);margin:14px 0}
+.dropzone{min-height:225px;border:1px dashed rgba(114,186,255,.32);border-radius:9px;background:linear-gradient(145deg,rgba(17,33,49,.85),rgba(9,17,26,.9))}
+.dropzone:before,.dropzone:after{width:13px;height:13px;border-color:rgba(85,230,189,.65)}
+.dropzone.drag{border-color:var(--mint);background:rgba(85,230,189,.06)}
+.drop-icon{width:42px;height:42px;border-radius:9px;background:#112b34;color:var(--mint);border:1px solid rgba(85,230,189,.25);box-shadow:none}
+.dropzone h3{font:600 13px var(--mono);letter-spacing:0}
+.dropzone p{font-size:10px;color:#8292a8}
+.preview-wrap{border-radius:9px;border:1px solid var(--line);background:#050a10;box-shadow:none}
+.preview-caption{font:9px var(--mono);color:#8292a8}
+.main-action{min-height:45px;padding:12px;margin-top:12px}
+.tiny-note{font-size:9px;color:#77889e}
+.empty-state,.loading{background:linear-gradient(180deg,#0e1925,#0b121b);color:var(--text);padding:40px 20px}
+.empty-orb{width:55px;height:55px;border-radius:10px;background:#112b34;color:var(--mint);box-shadow:none}
+.empty-state h3{font:600 15px var(--mono);color:#dce9f7}
+.empty-state p{font-size:10px;color:#8292a8}
+.spinner{border-color:#26384a;border-top-color:var(--mint)}
+.loading strong{font:600 12px var(--mono);color:#dce9f7}
+.loading p{font:8px var(--mono);color:#8292a8}
+.metrics{gap:8px}.metric{background:#0b1520;border:1px solid var(--line);border-radius:8px;padding:12px}
+.metric .k,.metric .s{font:8px var(--mono);color:#8292a8}
+.metric .v{font:600 29px var(--mono);color:var(--mint)}
+.summary{background:#101e2a;border-left:2px solid var(--mint);border-radius:4px;color:#b4c6d9;font-size:10px}
+.list-head h3{font:600 10px var(--mono);color:#d8e5f3}
+.list-head span,.food-meta{font:8px var(--mono);color:#8194aa}
+.food-row{border-color:var(--line)}
+.food-name{font:600 10px var(--mono);color:#dce9f7}
+.food-pct{font:600 10px var(--mono);color:var(--mint)}
+.result-note{background:#101e2a;border:1px solid var(--line);color:#9fb4ca;border-radius:7px;font-size:9px}
+.result-actions{gap:7px}
+.disclaimer,.disclaimer *{color:#71839a;font-size:8px}
+.model-pill{background:#102630;border:1px solid rgba(85,230,189,.2);color:var(--mint);font:8px var(--mono);border-radius:5px}
+.workflow{gap:11px}.workflow-item{font-size:9px;color:#879ab0}
+.workflow-num{width:25px;height:25px;flex-basis:25px;border-radius:6px;background:#102630;border:1px solid rgba(85,230,189,.18);color:var(--mint);font:9px var(--mono)}
+.workflow-item b{font:600 9px var(--mono);color:#dce9f7}
+.error{border-radius:7px;font:9px var(--mono)}
+.footer{border-color:var(--line);font:8px var(--mono);color:#6f8198}
+.footer a{color:var(--mint)}
+@media(max-width:760px){
+ .shell{padding:13px 12px 28px}.topbar{margin-bottom:23px;height:49px}
+ .nav-label{display:none}.hero{grid-template-columns:1fr;gap:13px;margin-bottom:15px}
+ .hero h1{font-size:35px}.hero p{font-size:11px}
+ .hero-card{min-height:84px;padding:10px 13px}.hero-card-main{font-size:13px;margin-top:5px}
+ .hero-card-foot{margin-top:5px}.hero-card:after{width:70px;height:70px;top:4px}
+ .grid{grid-template-columns:1fr;gap:11px}.panel{border-radius:9px}
+ .panel-head{padding:11px 12px}.panel-body{padding:12px}
+ .dropzone{min-height:185px}.empty-state{padding:30px 14px}
+ .right-col{gap:11px}
+}
+
+</style>
+
+<style id="foodnova-dark-futuristic">
+:root{
+ --bg:#080d12;--surface:#0e151d;--surface2:#111c26;--surface3:#172431;
+ --line:rgba(151,190,213,.14);--line2:rgba(151,190,213,.24);
+ --text:#edf5fb;--muted:#8294a3;--muted2:#b0bfca;
+ --lime:#b8f36b;--lime2:#93d94c;--mint:#53e0c1;--blue:#64bfff;
+ --violet:#a993ff;--amber:#ffca78;--red:#ff858b;
+ --shadow:0 26px 90px rgba(0,0,0,.46);
+ --mono:'Space Mono',ui-monospace,monospace;
+ --sans:'Space Grotesk',ui-sans-serif,system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+html{color-scheme:dark;background:#080d12}
+body{
+ color:var(--text)!important;
+ background:
+  radial-gradient(850px 480px at 4% -10%,rgba(72,224,193,.12),transparent 66%),
+  radial-gradient(740px 520px at 100% 0%,rgba(81,139,255,.12),transparent 64%),
+  radial-gradient(600px 400px at 50% 100%,rgba(184,243,107,.055),transparent 68%),
+  #080d12!important;
+ font-family:var(--sans)!important;
+}
+body:before{
+ opacity:.22!important;
+ background-image:linear-gradient(rgba(161,206,226,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(161,206,226,.045) 1px,transparent 1px)!important;
+ background-size:44px 44px!important;
+ mask-image:linear-gradient(to bottom,black,transparent 90%)!important;
+}
+.shell{max-width:1320px!important;padding-top:27px!important}
+.topbar{margin-bottom:54px!important}
+.brand-mark{
+ border-radius:13px!important;background:linear-gradient(145deg,#caff83,#68d6b5)!important;
+ box-shadow:0 0 0 1px rgba(184,243,107,.22),0 8px 34px rgba(83,224,193,.17)!important;
+}
+.brand-name{color:#f4f8fc!important;letter-spacing:-.055em!important}
+.brand-name span{color:var(--mint)!important}
+.brand-sub,.nav-label,.step,.field-label small,.hero-card-kicker,.hero-card-foot,.tiny-note,.footer,.model-pill{
+ font-family:var(--mono)!important;
+}
+.top-status{
+ color:#c3d0d9!important;background:rgba(16,27,37,.78)!important;
+ border-color:var(--line2)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+}
+.dot.on{background:var(--mint)!important;box-shadow:0 0 0 4px rgba(83,224,193,.1),0 0 15px rgba(83,224,193,.65)!important}
+.hero{margin-bottom:39px!important;align-items:center!important}
+.eyebrow{color:var(--mint)!important;font-family:var(--mono)!important}
+.hero h1{
+ color:#f0f6fb!important;font-weight:700!important;letter-spacing:-.075em!important;
+ text-shadow:0 8px 44px rgba(0,0,0,.22)!important;
+}
+.hero h1 .accent{
+ color:var(--lime)!important;
+ background:linear-gradient(90deg,#c7ff7a 0%,#66e4c2 90%);
+ -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+ text-shadow:none!important;
+}
+.hero p{color:#a7b7c4!important;max-width:700px!important}
+.hero-card{
+ border:1px solid rgba(83,224,193,.23)!important;
+ background:linear-gradient(145deg,rgba(17,35,43,.94),rgba(13,22,31,.9))!important;
+ box-shadow:0 20px 70px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+.hero-card:after{border-color:rgba(83,224,193,.18)!important;box-shadow:0 0 0 18px rgba(83,224,193,.035),0 0 0 38px rgba(83,224,193,.02)!important}
+.hero-card-kicker{color:#829ba9!important}
+.hero-card-main{color:#f1f8fb!important}
+.hero-card-foot{color:var(--mint)!important}
+.panel{
+ background:linear-gradient(155deg,rgba(16,25,34,.97),rgba(11,18,25,.97))!important;
+ border:1px solid rgba(139,177,199,.16)!important;
+ border-radius:22px!important;
+ box-shadow:0 22px 70px rgba(0,0,0,.28),inset 0 1px 0 rgba(255,255,255,.035)!important;
+}
+.panel-head{
+ background:rgba(19,31,42,.72)!important;
+ border-bottom:1px solid var(--line)!important;
+}
+.head-icon{
+ background:rgba(83,224,193,.1)!important;border:1px solid rgba(83,224,193,.17)!important;
+ color:var(--mint)!important;
+}
+.panel-head h2{color:#e9f2f8!important}
+.step{color:#77909f!important}
+.security{
+ color:#a9bac5!important;background:rgba(255,202,120,.055)!important;
+ border:1px solid rgba(255,202,120,.18)!important;
+}
+.security strong{color:#ffcf88!important}
+.field-label{color:#dce8ef!important}
+.field-label small{color:#738b9b!important}
+.api-input{
+ color:#edf5fb!important;background:#0a121a!important;
+ border:1px solid rgba(141,177,198,.2)!important;
+}
+.api-input::placeholder{color:#637887!important}
+.api-input:focus{border-color:rgba(83,224,193,.58)!important;box-shadow:0 0 0 3px rgba(83,224,193,.09)!important}
+.key-state{color:#8498a7!important}
+.divider{background:var(--line)!important}
+.dropzone{
+ background:
+  radial-gradient(ellipse at 50% 0%,rgba(83,224,193,.075),transparent 65%),
+  rgba(7,14,20,.72)!important;
+ border:1px dashed rgba(111,190,188,.36)!important;
+}
+.dropzone:hover,.dropzone.dragover{
+ background:rgba(17,39,43,.78)!important;border-color:rgba(83,224,193,.72)!important;
+ box-shadow:inset 0 0 45px rgba(83,224,193,.045),0 0 0 3px rgba(83,224,193,.06)!important;
+}
+.drop-icon{
+ color:#b8f36b!important;background:rgba(184,243,107,.09)!important;
+ border:1px solid rgba(184,243,107,.18)!important;
+}
+.dropzone h3{color:#eaf4f8!important}
+.dropzone p{color:#8296a5!important}
+.btn{font-family:var(--sans)!important;font-weight:700!important;transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease!important}
+.btn:active{transform:translateY(1px) scale(.99)!important}
+.btn-primary{
+ color:#07120f!important;background:linear-gradient(105deg,#c4ff76,#70e0b9)!important;
+ border:1px solid rgba(190,255,151,.6)!important;
+ box-shadow:0 8px 28px rgba(108,220,161,.17),inset 0 1px 0 rgba(255,255,255,.45)!important;
+}
+.btn-primary:hover:not(:disabled){box-shadow:0 10px 36px rgba(108,220,161,.27)!important;filter:brightness(1.04)}
+.btn-primary:disabled{opacity:.35!important;filter:saturate(.5)!important;box-shadow:none!important}
+.btn-secondary,.btn-ghost{
+ color:#c1d1dc!important;background:rgba(21,34,45,.8)!important;
+ border:1px solid rgba(141,177,198,.2)!important;
+}
+.btn-secondary:hover,.btn-ghost:hover{color:#f3fbff!important;border-color:rgba(83,224,193,.42)!important;background:#182a35!important}
+.main-action{letter-spacing:-.015em!important}
+.preview-wrap{
+ border:1px solid rgba(123,178,196,.26)!important;background:#05090d!important;
+ box-shadow:0 14px 38px rgba(0,0,0,.3)!important;
+}
+.preview-caption{color:#8ea1af!important}
+.empty-state{background:transparent!important}
+.empty-orb{
+ color:var(--mint)!important;background:radial-gradient(circle,rgba(83,224,193,.14),rgba(83,224,193,.025) 68%)!important;
+ border:1px solid rgba(83,224,193,.17)!important;box-shadow:0 0 45px rgba(83,224,193,.06)!important;
+}
+.empty-state h3{color:#eaf3f8!important}
+.empty-state p{color:#8296a5!important}
+.loading{background:rgba(6,14,19,.4)!important}
+.loading strong{color:#e6f1f6!important}
+.loading p{color:#7e98a6!important;font-family:var(--mono)!important}
+.spinner{border-color:rgba(83,224,193,.16)!important;border-top-color:var(--mint)!important}
+.metric{
+ background:linear-gradient(145deg,#14232c,#101a23)!important;
+ border:1px solid rgba(135,177,199,.16)!important;
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.025)!important;
+}
+.metric .k{color:#91a5b2!important}
+.metric .v{color:var(--lime)!important}
+.metric .s{color:#708592!important}
+.summary{
+ color:#c1d0d9!important;background:rgba(83,224,193,.055)!important;
+ border:1px solid rgba(83,224,193,.16)!important;
+}
+.list-head h3{color:#e8f2f7!important}
+.list-head span{color:#7e98a6!important}
+.food-item,.food-row,.food-card{
+ background:rgba(18,30,40,.78)!important;border-color:rgba(137,177,198,.15)!important;
+}
+.food-name,.food-item strong{color:#e6f0f5!important}
+.food-meta,.food-item small{color:#8499a7!important}
+.result-note{
+ color:#a9bac4!important;background:rgba(255,202,120,.055)!important;
+ border:1px solid rgba(255,202,120,.15)!important;
+}
+.disclaimer{color:#6f8492!important}
+.workflow{background:transparent!important}
+.workflow-item{color:#8fa2af!important}
+.workflow-num{
+ color:var(--mint)!important;background:rgba(83,224,193,.07)!important;
+ border:1px solid rgba(83,224,193,.2)!important;
+}
+.workflow-item b{color:#e2edf2!important}
+.model-pill{
+ color:var(--mint)!important;background:rgba(83,224,193,.07)!important;
+ border:1px solid rgba(83,224,193,.2)!important;
+}
+.error{
+ color:#ffb7b8!important;background:rgba(115,32,42,.23)!important;
+ border:1px solid rgba(255,112,123,.32)!important;
+}
+.footer{border-color:var(--line)!important;color:#718491!important}
+.footer a{color:var(--mint)!important}
+.footer a:hover{color:#d0ffe9!important}
+.hidden{display:none!important}
+::selection{background:rgba(83,224,193,.28);color:#fff}
+@media(max-width:720px){
+ .shell{padding:13px 13px 30px!important}
+ .topbar{margin-bottom:31px!important}
+ .nav-label{display:none!important}
+ .hero{gap:17px!important}
+ .hero h1{font-size:clamp(42px,11vw,60px)!important}
+ .hero-card{border-radius:17px!important}
+ .panel{border-radius:18px!important}
+ .panel-head{padding:15px!important}
+ .panel-body{padding:15px!important}
+}
+@media(prefers-reduced-motion:no-preference){
+ .panel{animation:panelIn .55s both}
+ .hero{animation:panelIn .65s both}
+ .dropzone{transition:all .22s ease!important}
+ .brand-mark{animation:markGlow 5s ease-in-out infinite alternate}
+}
+@keyframes panelIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@keyframes markGlow{from{box-shadow:0 0 0 1px rgba(184,243,107,.18),0 8px 25px rgba(83,224,193,.1)}to{box-shadow:0 0 0 1px rgba(83,224,193,.3),0 8px 34px rgba(83,224,193,.22)}}
+</style>
+
+
+<style id="foodnova-clean-api-setup">
+.api-setup{padding:15px 16px 13px;border:1px solid rgba(83,224,193,.16);border-radius:15px;background:linear-gradient(145deg,rgba(16,32,39,.68),rgba(10,18,25,.62));margin-bottom:3px}
+.setup-topline{display:flex;align-items:center;gap:11px;margin-bottom:14px}
+.setup-icon{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;color:var(--mint);background:rgba(83,224,193,.09);border:1px solid rgba(83,224,193,.17);font-size:15px}
+.setup-topline strong,.ready-copy strong{display:block;color:#eaf4f8;font-size:12px;font-weight:700;letter-spacing:-.02em}
+.setup-topline small,.ready-copy small{display:block;color:#7f95a3;font-size:10px;margin-top:2px}
+.setup-footnote{font-size:9px;line-height:1.55;color:#718491;margin:9px 0 0}
+.engine-ready{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1px solid rgba(83,224,193,.22);border-radius:14px;background:linear-gradient(100deg,rgba(32,82,74,.2),rgba(16,34,39,.5));margin-bottom:3px}
+.ready-symbol{width:27px;height:27px;display:grid;place-items:center;border-radius:50%;color:#07120f;background:linear-gradient(145deg,#c4ff76,#70e0b9);font-size:14px;font-weight:900;box-shadow:0 0 20px rgba(83,224,193,.18)}
+.ready-copy{flex:1}
+.change-key{border:1px solid rgba(139,177,198,.18);border-radius:8px;background:rgba(13,24,32,.7);color:#90a8b6;padding:6px 9px;font:600 9px var(--sans);cursor:pointer}
+.change-key:hover{color:#eaf4f8;border-color:rgba(83,224,193,.35)}
+#apiStatus{letter-spacing:.1em}
+.api-setup.hidden,.engine-ready.hidden{display:none!important}
+@media(max-width:720px){.api-setup{padding:13px}.engine-ready{padding:11px 12px}}
+</style>
+
+</head>
+<body>
+<div class="shell">
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">F</div>
+      <div><div class="brand-name">FOODNOVA <span>/ VISION</span></div><div class="brand-sub">COMPUTER VISION WORKSPACE</div></div>
+    </div>
+    <div class="nav-right"><span class="nav-label">VISION PIPELINE</span><div class="top-status"><span class="dot" id="apiDot"></span><span id="apiStatus">API not connected</span></div></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <div class="eyebrow">01 — IMAGE INPUT / 02 — SEGMENTATION / 03 — MEASURE</div>
+      <h1>Plate <span class="accent">segmentation.</span></h1>
+      <p>Detect visible food regions, trace approximate contours, and estimate plate-surface coverage from one image.</p>
+    </div>
+    <div class="hero-card"><div class="hero-card-kicker">VISION SYSTEM / READY STATE</div><div class="hero-card-main">IMAGE → MASKS<br>→ COVERAGE</div><div class="hero-card-foot">● SINGLE-PASS ANALYSIS</div></div>
+  </section>
+
+  <main class="grid">
+    <section class="panel">
+      <div class="panel-head"><div class="head-left"><span class="head-icon">⌗</span><h2>Input frame</h2></div><span class="step">MODULE 01</span></div>
+      <div class="panel-body">
+        <div id="apiSetup" class="api-setup">
+          <div class="setup-topline"><span class="setup-icon">⌘</span><div><strong>Connect vision engine</strong><small>One-time setup for this browser session</small></div></div>
+          <label class="field-label" for="apiKey">Access key <small>PRIVATE SESSION</small></label>
+          <div class="api-row"><input id="apiKey" class="api-input" type="password" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Enter access key"><button id="clearKey" class="btn btn-ghost" type="button">Clear</button></div>
+          <div class="key-state"><span class="dot" id="keyDot"></span><span id="keyState">Enter your access key to activate plate analysis.</span></div>
+          <p class="setup-footnote">Your key stays in page memory and is not saved by FoodNova. Browser-based API keys are still visible to browser tools; use a restricted key for private testing.</p>
+        </div>
+        <div id="engineReady" class="engine-ready hidden"><span class="ready-symbol">✓</span><div class="ready-copy"><strong>Vision engine active</strong><small>Plate analysis is ready</small></div><button id="changeKey" type="button" class="change-key">Settings</button></div>
+        <div class="divider"></div>
+        <label class="field-label">Plate photograph <small>JPG · PNG · WEBP</small></label>
+        <div id="dropzone" class="dropzone">
+          <div class="dropzone-inner"><div class="drop-icon">↥</div><h3>Load source image</h3><p>Drop a frame here or capture directly from your device</p>
+            <div class="drop-actions"><button id="takePhoto" class="btn btn-primary" type="button">◎ Take photo</button><button id="choosePhoto" class="btn btn-secondary" type="button">＋ Choose image</button></div>
+            <input id="cameraInput" class="hidden" type="file" accept="image/*" capture="environment">
+            <input id="fileInput" class="hidden" type="file" accept="image/*">
+          </div>
+        </div>
+        <div id="previewWrap" class="preview-wrap"><img id="preview" alt="Selected plate preview"><svg id="overlay" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-label="Estimated food region overlays"></svg></div>
+        <div id="previewCaption" class="preview-caption hidden"><span id="fileInfo">Photo selected</span><button id="removePhoto" class="btn btn-ghost" type="button" style="padding:5px 10px;font-size:9px">Remove photo ×</button></div>
+        <button id="analyzeBtn" class="btn btn-primary main-action" type="button" disabled>Run segmentation <span class="arrow" aria-hidden="true">→</span></button>
+        <p class="tiny-note">A high-quality photo is sent to Google Gemini for analysis. For best results, photograph the whole plate from above and avoid strong shadows or reflections.</p>
+        <div id="errorBox" class="error" role="alert"></div>
+      </div>
+    </section>
+
+    <div class="right-col">
+      <section class="panel">
+        <div class="panel-head"><div class="head-left"><span class="head-icon">◫</span><h2>Segmentation output</h2></div><span class="step">MODULE 02</span></div>
+        <div id="emptyState" class="empty-state"><div class="empty-orb">✳</div><h3>Your plate tells a story.</h3><p>Start with a photo. FoodNova will identify what remains and estimate the visible food coverage.</p></div>
+        <div id="loadingState" class="loading hidden"><div class="spinner"></div><strong>Running vision inference…</strong><p>VISION PIPELINE ACTIVE · DETECTING REGIONS</p></div>
+        <div id="results" class="results panel-body">
+          <div class="metrics"><div class="metric"><div class="k">Food regions found</div><div id="metricCount" class="v">0</div><div class="s">Separate detected patches</div></div><div class="metric"><div class="k">Food coverage</div><div id="metricCoverage" class="v">—</div><div class="s">Estimated image-area ratio · not food mass</div></div></div>
+          <div id="timingLine" style="margin:9px 0 12px;font:9px var(--mono);color:var(--muted)"></div>
+          <div id="summary" class="summary"></div>
+          <div class="list-head"><h3>Detected food regions</h3><span id="plateLabel">Plate surface: —</span></div>
+          <div id="foodList" class="food-list"></div>
+          <div id="resultNote" class="result-note"></div>
+          <div class="result-actions"><button id="downloadJson" class="btn btn-secondary" type="button">↓ Export JSON</button><button id="downloadCsv" class="btn btn-secondary" type="button">↓ Scientific CSV</button><button id="downloadDictionary" class="btn btn-ghost" type="button">↓ Field Guide</button></div>
+          <div class="disclaimer">AI-generated region outlines are approximate visual guides, not pixel-perfect measurements. Coverage estimates visible plate surface, not grams, calories or original serving size.</div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><div class="head-left"><span class="head-icon">⌘</span><h2>Pipeline monitor</h2></div><span class="model-pill">VISION / INFERENCE</span></div>
+        <div class="panel-body workflow">
+          <div class="workflow-item"><span class="workflow-num">01</span><div><b>Pre-process</b><br>Resize and encode the source frame locally before upload.</div></div>
+          <div class="workflow-item"><span class="workflow-num">02</span><div><b>Detect + segment</b><br>One vision request identifies food regions and returns approximate contour masks.</div></div>
+          <div class="workflow-item"><span class="workflow-num">03</span><div><b>Quantify</b><br>Overlay masks and estimate visible food coverage against the plate surface.</div></div>
+        </div>
+      </section>
+    </div>
+  </main>
+  <footer class="footer"><span>FOODNOVA / VISION WORKSPACE · BROWSER PROTOTYPE · INTERNET REQUIRED</span><span><a href="https://ai.google.dev/gemini-api/docs" target="_blank" rel="noopener">Gemini API docs</a>　·　<a href="https://ai.google.dev/gemini-api/docs/api-key" target="_blank" rel="noopener">API key guidance</a></span></footer>
+</div>
+<script>
+(() => {
+  'use strict';
+  const $ = (id) => document.getElementById(id);
+  const state = {
+    imageDataUrl: null, fileName: '', report: null, apiKey: '', busy: false,
+    modelUsed: '', imagePreprocessMs: 0, originalMimeType: '', originalFileSizeBytes: 0,
+    originalWidth: 0, originalHeight: 0, processedWidth: 0, processedHeight: 0,
+    processedImageBytes: 0, resizeScale: 1, uploadedAtUtc: ''
+  };
+  const ANALYSIS_MODEL = 'gemini-4-hydrogen';
+  const palette = ['#c3f36b','#59d8b0','#66b8ff','#ffbd66','#d59aff','#ff7e89','#a8d86d','#f08fc8'];
+  const schema = {
+    type: 'object',
+    properties: {
+      boxes: { type: 'array', items: {
+        type: 'object',
+        properties: {
+          box_2d: { type: 'array', items: { type: 'integer' } },
+          mask: { type: 'array', items: { type: 'array', items: { type: 'integer' } } },
+          label: { type: 'string' },
+          food_category: { type: 'string', enum: ['staple','pulse_legume','vegetable','dairy','protein','sauce_condiment','mixed_dish','other','uncertain','not_applicable'] },
+          visual_state: { type: 'string', enum: ['tiny_remnants','small_portion','moderate_portion','large_portion','scattered_or_fragmented','partially_occluded','uncertain','not_applicable'] },
+          edible_status: { type: 'string', enum: ['edible_food','inedible_food_part','uncertain','not_applicable'] },
+          evidence: { type: 'string' },
+          confidence_pct: { type: 'integer' }
+        },
+        required: ['box_2d','mask','label','food_category','visual_state','edible_status','evidence','confidence_pct']
+      } },
+      plate_detected: { type: 'boolean' },
+      image_quality: { type: 'string', enum: ['good','usable','poor','uncertain'] },
+      image_quality_notes: { type: 'string' },
+      summary: { type: 'string' },
+      limitations: { type: 'string' }
+    },
+    required: ['boxes','plate_detected','image_quality','image_quality_notes','summary','limitations']
+  };
+
+  function setKeyStatus(connected, message) {
+    $('apiDot').classList.toggle('on', connected); $('keyDot').classList.toggle('on', connected);
+    $('apiStatus').textContent = connected ? 'GEMINI SYSTEM READY' : 'GEMINI STANDBY';
+    $('keyState').textContent = message;
+  }
+  $('apiKey').addEventListener('input', () => {
+    const k = $('apiKey').value.trim(); state.apiKey = k;
+    setKeyStatus(!!k, k ? 'Gemini API key activated for this session.' : 'Enter your Gemini API key to activate analysis.');
+    syncEngineUI(); updateAnalyzeButton();
+  });
+  $('clearKey').addEventListener('click', () => { $('apiKey').value = ''; state.apiKey = ''; setKeyStatus(false, 'Gemini API key cleared from this session.'); syncEngineUI(); updateAnalyzeButton(); });
+  function syncEngineUI(){
+    const active=!!state.apiKey;
+    $('apiSetup').classList.toggle('hidden',active);
+    $('engineReady').classList.toggle('hidden',!active);
+    $('apiStatus').textContent=active?'SYSTEM READY':'GEMINI STANDBY';
+  }
+  $('changeKey').addEventListener('click',()=>{
+    $('apiSetup').classList.remove('hidden');
+    $('engineReady').classList.add('hidden');
+    $('apiKey').focus();
+  });
+
+  syncEngineUI();
+  function updateAnalyzeButton(){ $('analyzeBtn').disabled = !state.imageDataUrl || !state.apiKey || state.busy; }
+  function showError(msg){ $('errorBox').textContent = msg; $('errorBox').style.display = 'block'; }
+  function clearError(){ $('errorBox').style.display = 'none'; $('errorBox').textContent = ''; }
+  function hideResults(){ $('results').style.display = 'none'; $('emptyState').classList.remove('hidden'); $('loadingState').classList.add('hidden'); }
+
+  function loadFile(file){
+    if(!file) return;
+    if(!file.type || !file.type.startsWith('image/')){ showError('Please choose an image file such as JPG, PNG or WEBP.'); return; }
+    clearError();
+    const reader = new FileReader();
+    reader.onerror = () => showError('The selected image could not be read. Try another photo.');
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const preprocessStart = performance.now(); const maxSide = 2048; const scale = Math.min(1, maxSide / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas'); canvas.width = Math.max(1, Math.round(img.naturalWidth * scale)); canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+        const ctx = canvas.getContext('2d'); ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        state.imageDataUrl = canvas.toDataURL('image/jpeg',0.92);
+        state.imagePreprocessMs = Math.round(performance.now()-preprocessStart);
+        state.fileName = file.name || 'plate-photo.jpg';
+        state.originalMimeType = file.type || 'unknown';
+        state.originalFileSizeBytes = Number(file.size) || 0;
+        state.originalWidth = img.naturalWidth; state.originalHeight = img.naturalHeight;
+        state.processedWidth = canvas.width; state.processedHeight = canvas.height;
+        state.resizeScale = scale;
+        state.processedImageBytes = Math.max(0, Math.round((state.imageDataUrl.length - state.imageDataUrl.indexOf(',') - 1) * 3 / 4));
+        state.uploadedAtUtc = new Date().toISOString();
+        state.report = null;
+        $('preview').src = state.imageDataUrl; $('previewWrap').style.display = 'block'; $('previewCaption').classList.remove('hidden');
+        $('fileInfo').textContent = `${state.fileName} · ${canvas.width} × ${canvas.height}`; $('overlay').innerHTML = '';
+        hideResults(); updateAnalyzeButton();
+      };
+      img.onerror = () => showError('This image could not be decoded by the browser.');
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  }
+  $('cameraInput').addEventListener('change', e => loadFile(e.target.files && e.target.files[0]));
+  $('fileInput').addEventListener('change', e => loadFile(e.target.files && e.target.files[0]));
+  $('takePhoto').addEventListener('click', () => $('cameraInput').click());
+  $('choosePhoto').addEventListener('click', () => $('fileInput').click());
+  $('removePhoto').addEventListener('click', () => {
+    state.imageDataUrl = null; state.fileName = ''; state.report = null;
+    state.originalMimeType=''; state.originalFileSizeBytes=0; state.originalWidth=0; state.originalHeight=0;
+    state.processedWidth=0; state.processedHeight=0; state.processedImageBytes=0; state.resizeScale=1; state.uploadedAtUtc='';
+    $('preview').src = ''; $('previewWrap').style.display = 'none'; $('previewCaption').classList.add('hidden'); $('cameraInput').value=''; $('fileInput').value=''; $('overlay').innerHTML=''; hideResults(); clearError(); updateAnalyzeButton();
+  });
+  const dz = $('dropzone');
+  ['dragenter','dragover'].forEach(ev => dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.add('drag');}));
+  ['dragleave','drop'].forEach(ev => dz.addEventListener(ev,e=>{e.preventDefault();dz.classList.remove('drag');}));
+  dz.addEventListener('drop',e=>{const f=e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if(f) loadFile(f);});
+
+  function extractOutputText(payload){
+    if(typeof payload.output_text === 'string' && payload.output_text) return payload.output_text;
+    const chunks=[];
+    for(const step of (payload.steps || [])) if(step.type === 'model_output' && Array.isArray(step.content)) {
+      for(const part of step.content) if(part.type === 'text' && typeof part.text === 'string') chunks.push(part.text);
+    }
+    for(const item of (payload.output || [])) if(item.type === 'message' && Array.isArray(item.content)) {
+      for(const part of item.content) if((part.type === 'output_text' || part.type === 'text') && typeof part.text === 'string') chunks.push(part.text);
+    }
+    return chunks.join('\n');
+  }
+  function clamp(n,min,max){n=Number(n);return Number.isFinite(n)?Math.max(min,Math.min(max,n)):min;}
+  function escapeHtml(s){return String(s ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+  function drawOverlay(report){
+    const svg=$('overlay'); svg.innerHTML='';
+    (report.food_items || []).forEach((item,i)=>{
+      const polygons = Array.isArray(item.polygons) && item.polygons.length
+        ? item.polygons : (Array.isArray(item.polygon) ? [item.polygon] : []);
+      polygons.forEach(poly=>{
+        const pts=(poly || []).filter(p=>Number.isFinite(Number(p.x))&&Number.isFinite(Number(p.y)))
+          .map(p=>`${clamp(p.x,0,1000)},${clamp(p.y,0,1000)}`).join(' ');
+        if(!pts) return;
+        const polygon=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+        polygon.setAttribute('points',pts); polygon.setAttribute('fill',palette[i%palette.length]);
+        polygon.setAttribute('fill-opacity','0.25'); polygon.setAttribute('stroke',palette[i%palette.length]);
+        polygon.setAttribute('stroke-width','3'); polygon.setAttribute('stroke-linejoin','round');
+        svg.appendChild(polygon);
+      });
+    });
+    if(Array.isArray(report.plate_polygon) && report.plate_polygon.length){
+      const platePts=report.plate_polygon.map(p=>`${clamp(p.x,0,1000)},${clamp(p.y,0,1000)}`).join(' ');
+      const outline=document.createElementNS('http://www.w3.org/2000/svg','polygon');
+      outline.setAttribute('points',platePts); outline.setAttribute('fill','none');
+      outline.setAttribute('stroke','#f1f5f1'); outline.setAttribute('stroke-opacity','0.7');
+      outline.setAttribute('stroke-width','2'); outline.setAttribute('stroke-dasharray','8 6');
+      svg.appendChild(outline);
+    }
+  }
+  function maskToPoints(mask){
+    if(!Array.isArray(mask)) return [];
+    return mask.map(pair=>{
+      if(!Array.isArray(pair) || pair.length<2) return null;
+      const x=Number(pair[0]), y=Number(pair[1]);
+      if(!Number.isFinite(x)||!Number.isFinite(y)) return null;
+      if(x < -5 || x > 1005 || y < -5 || y > 1005) return null;
+      return {x:clamp(x,0,1000),y:clamp(y,0,1000)};
+    }).filter(Boolean);
+  }
+  function isPlateLabel(label){
+    const n=String(label||'').toLowerCase().replace(/[_-]+/g,' ').trim();
+    return n==='__ plate surface __' || n==='plate surface' || n==='plate' || n==='__plate__' ||
+      n==='tray surface' || n==='__tray_surface__' || n.includes('plate surface') || n.includes('tray surface');
+  }
+  function polygonToCanvas(ctx, points, width, height){
+    if(!Array.isArray(points)||points.length<3) return false;
+    ctx.beginPath();
+    ctx.moveTo(points[0].x/1000*width,points[0].y/1000*height);
+    for(let i=1;i<points.length;i++) ctx.lineTo(points[i].x/1000*width,points[i].y/1000*height);
+    ctx.closePath(); ctx.fill();
+    return true;
+  }
+  function polygonBounds(polygons){
+    const pts=(polygons||[]).flat().filter(p=>Number.isFinite(Number(p.x))&&Number.isFinite(Number(p.y)));
+    if(!pts.length) return null;
+    const xs=pts.map(p=>p.x), ys=pts.map(p=>p.y);
+    return {x_min_norm:Math.min(...xs),y_min_norm:Math.min(...ys),x_max_norm:Math.max(...xs),y_max_norm:Math.max(...ys)};
+  }
+  function calculatePixelCoverage(foodItems, platePolygon){
+    if(!Array.isArray(platePolygon)||platePolygon.length<3) {
+      return {platePixels:0,totalFoodPixels:0,totalPct:null,itemStats:[],rasterWidth:0,rasterHeight:0,overlapPixels:0};
+    }
+    const sourceW=Math.max(1,state.processedWidth||state.originalWidth||1);
+    const sourceH=Math.max(1,state.processedHeight||state.originalHeight||1);
+    const maxRasterSide=1024;
+    const rasterScale=maxRasterSide/Math.max(sourceW,sourceH);
+    const width=Math.max(64,Math.round(sourceW*rasterScale));
+    const height=Math.max(64,Math.round(sourceH*rasterScale));
+    const canvas=document.createElement('canvas'); canvas.width=width; canvas.height=height;
+    const ctx=canvas.getContext('2d',{willReadFrequently:true});
+    if(!ctx) return {platePixels:0,totalFoodPixels:0,totalPct:null,itemStats:[],rasterWidth:width,rasterHeight:height,overlapPixels:0};
+
+    ctx.fillStyle='#fff'; polygonToCanvas(ctx,platePolygon,width,height);
+    const plateData=ctx.getImageData(0,0,width,height).data;
+    const pixelCount=width*height;
+    const plate=new Uint8Array(pixelCount); let platePixels=0;
+    for(let i=0,j=3;i<pixelCount;i++,j+=4){if(plateData[j]>127){plate[i]=1;platePixels++;}}
+    if(platePixels<100) {
+      return {platePixels:0,totalFoodPixels:0,totalPct:null,itemStats:foodItems.map(()=>null),rasterWidth:width,rasterHeight:height,overlapPixels:0};
+    }
+
+    const masks=[];
+    for(const item of foodItems){
+      ctx.clearRect(0,0,width,height); ctx.fillStyle='#fff';
+      (item.polygons||[]).forEach(poly=>polygonToCanvas(ctx,poly,width,height));
+      const data=ctx.getImageData(0,0,width,height).data;
+      const mask=new Uint8Array(pixelCount);
+      let rawPixels=0,insidePixels=0,outsidePlatePixels=0;
+      for(let i=0,j=3;i<pixelCount;i++,j+=4){
+        if(data[j]>127){
+          mask[i]=1; rawPixels++;
+          if(plate[i]) insidePixels++; else outsidePlatePixels++;
+        }
+      }
+      masks.push({mask,rawPixels,insidePixels,outsidePlatePixels});
+    }
+
+    const union=new Uint8Array(pixelCount);
+    let totalFoodPixels=0;
+    for(let i=0;i<pixelCount;i++){
+      if(!plate[i]) continue;
+      for(let k=0;k<masks.length;k++){
+        if(masks[k].mask[i]){union[i]=1;totalFoodPixels++;break;}
+      }
+    }
+
+    let totalOverlapPixels=0;
+    let overlapUnionPixels=0;
+    for(let i=0;i<pixelCount;i++){
+      if(!plate[i]) continue;
+      let hits=0;
+      for(let k=0;k<masks.length;k++) if(masks[k].mask[i]) hits++;
+      if(hits>1) overlapUnionPixels++;
+    }
+    const itemStats=masks.map((entry,index)=>{
+      let overlapPixels=0,uniquePixels=0;
+      for(let i=0;i<pixelCount;i++){
+        if(!plate[i] || !entry.mask[i]) continue;
+        let otherCount=0;
+        for(let k=0;k<masks.length;k++) if(k!==index && masks[k].mask[i]) otherCount++;
+        if(otherCount>0) overlapPixels++; else uniquePixels++;
+      }
+      totalOverlapPixels+=overlapPixels;
+      return {
+        area_raster_px:entry.insidePixels,
+        raw_area_raster_px:entry.rawPixels,
+        unique_area_raster_px:uniquePixels,
+        overlap_area_raster_px:overlapPixels,
+        outside_plate_area_raster_px:entry.outsidePlatePixels,
+        area_pct_of_plate:entry.insidePixels/platePixels*100,
+        unique_area_pct_of_plate:uniquePixels/platePixels*100,
+        overlap_pct_of_region:entry.insidePixels?overlapPixels/entry.insidePixels*100:0,
+        share_of_union_pct:totalFoodPixels?uniquePixels/totalFoodPixels*100:0
+      };
+    });
+
+    return {
+      platePixels,totalFoodPixels,totalPct:totalFoodPixels/platePixels*100,
+      itemStats,rasterWidth:width,rasterHeight:height,
+      overlapPixels:totalOverlapPixels,
+      overlapUnionPixels,
+      plateAreaPctOfImage:platePixels/pixelCount*100,
+      uncoveredPct:Math.max(0,100-totalFoodPixels/platePixels*100),
+      sumRegionAreaPct:itemStats.reduce((s,x)=>s+(x?x.area_pct_of_plate:0),0)
+    };
+  }
+  function createAnalysisId(){
+    if(window.crypto && typeof window.crypto.randomUUID==='function') return window.crypto.randomUUID();
+    return 'fn-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
+  }
+  function normalizeSegmentation(raw){
+    const boxes=Array.isArray(raw.boxes)?raw.boxes:[];
+    const plateBox=raw.plate_detected===false?null:boxes.find(b=>isPlateLabel(b.label));
+    const platePolygon=plateBox?maskToPoints(plateBox.mask):[];
+    const foodBoxes=boxes.filter(b=>b && !isPlateLabel(b.label));
+    const foodItems=[];
+    foodBoxes.forEach((box,index)=>{
+      const rawName=String(box.label||'').trim();
+      const points=maskToPoints(box.mask);
+      if(!rawName || points.length<3) return;
+      const polygons=[points];
+      const bounds=polygonBounds(polygons);
+      foodItems.push({
+        region_id:`R${String(foodItems.length+1).padStart(3,'0')}`,
+        name:rawName,
+        food_category:String(box.food_category||'uncertain'),
+        visual_state:String(box.visual_state||'uncertain'),
+        edible_status:String(box.edible_status||'uncertain'),
+        evidence:String(box.evidence||''),
+        confidence_pct:Number.isFinite(Number(box.confidence_pct))?clamp(box.confidence_pct,0,100):null,
+        confidence_interpretation:'Model-reported visual confidence; not a calibrated probability',
+        surface_pct:null,
+        polygons,
+        bounding_box_normalized:bounds,
+        source_box_2d:Array.isArray(box.box_2d)?box.box_2d:null,
+        contour_vertex_count:points.length,
+        source_detection_index:index+1
+      });
+    });
+
+    const coverage=calculatePixelCoverage(foodItems,platePolygon);
+    foodItems.forEach((item,i)=>{
+      const stat=coverage.itemStats[i];
+      if(stat){
+        item.measurements=stat;
+        item.surface_pct=stat.area_pct_of_plate;
+      } else {
+        item.measurements=null;
+        item.surface_pct=null;
+      }
+      const b=item.bounding_box_normalized;
+      if(b && state.processedWidth && state.processedHeight){
+        item.bounding_box_source_pixels={
+          x_min:Math.round(b.x_min_norm/1000*state.processedWidth),
+          y_min:Math.round(b.y_min_norm/1000*state.processedHeight),
+          x_max:Math.round(b.x_max_norm/1000*state.processedWidth),
+          y_max:Math.round(b.y_max_norm/1000*state.processedHeight)
+        };
+      } else item.bounding_box_source_pixels=null;
+    });
+
+    const hasPlate=coverage.platePixels>0;
+    const limitations=[
+      'Food labels, polygon boundaries and confidence scores are AI-generated visual estimates and have not been human-validated.',
+      'Area percentages are estimated by rasterizing model-generated polygon contours at a maximum raster dimension of 1024 pixels while preserving image aspect ratio.',
+      'Raster area is an image-plane estimate, not physical surface area in cm². No scale or geometric calibration target is present.',
+      'Mass (g), volume (mL), calories (kcal), consumed quantity and percentage of original serving wasted are not measurable from this single uncalibrated after-meal image.',
+      hasPlate?'The plate-surface denominator is the AI-generated inner-plate polygon; boundary error directly affects all area percentages.':'Plate surface was not measurable; area percentages are withheld.'
+    ];
+    if(raw.limitations) limitations.push(String(raw.limitations));
+    return {
+      analysis_id:createAnalysisId(),
+      plate_or_tray_detected:hasPlate,
+      food_items:foodItems,
+      total_remaining_food_surface_pct:hasPlate?coverage.totalPct:null,
+      summary:raw.summary||'Visible food regions identified from the image.',
+      limitations:[...new Set(limitations)].join(' '),
+      plate_polygon:hasPlate?platePolygon:[],
+      image_quality:String(raw.image_quality||'uncertain'),
+      image_quality_notes:String(raw.image_quality_notes||'No image-quality note supplied.'),
+      measurement:{
+        method:'Model-generated contour polygons rasterized locally and clipped to model-generated inner-plate polygon',
+        raster_width_px:coverage.rasterWidth,
+        raster_height_px:coverage.rasterHeight,
+        plate_area_raster_px:coverage.platePixels||null,
+        food_union_area_raster_px:coverage.totalFoodPixels||null,
+        uncovered_plate_area_raster_px:hasPlate?Math.max(0,coverage.platePixels-coverage.totalFoodPixels):null,
+        plate_surface_covered_pct:hasPlate?coverage.totalPct:null,
+        plate_surface_uncovered_pct:hasPlate?coverage.uncoveredPct:null,
+        sum_of_region_area_pct:hasPlate?coverage.sumRegionAreaPct:null,
+        sum_of_region_overlap_area_raster_px:coverage.overlapPixels||0,
+        overlap_union_area_raster_px:coverage.overlapUnionPixels||0,
+        plate_area_pct_of_full_raster:hasPlate?coverage.plateAreaPctOfImage:null,
+        plate_mask_confidence_pct:plateBox && Number.isFinite(Number(plateBox.confidence_pct))?clamp(plateBox.confidence_pct,0,100):null,
+        calibration_status:'NOT_CALIBRATED',
+        physical_area_cm2:null,
+        mass_g:null,
+        volume_ml:null,
+        energy_kcal:null,
+        original_serving_mass_g:null,
+        consumed_mass_g:null,
+        waste_mass_pct:null,
+        physical_measurements_note:'Not measured. A single 2D photo without a scale reference, depth/volume calibration or pre-meal serving mass cannot support these quantities.'
+      }
+    };
+  }
+  function renderReport(report){
+    state.report=report; const items=Array.isArray(report.food_items)?report.food_items:[];
+    $('metricCount').textContent=items.length;
+    $('metricCoverage').textContent=Number.isFinite(report.total_remaining_food_surface_pct)?`${report.total_remaining_food_surface_pct.toFixed(1)}%`:'—';
+    $('summary').textContent=report.summary || 'Analysis complete.';
+    $('plateLabel').textContent=report.plate_or_tray_detected?'Plate surface estimated':'Plate boundary unclear · coverage withheld';
+    $('foodList').innerHTML='';
+    if(!items.length){const p=document.createElement('div');p.className='food-row';p.textContent='No clear food regions were identified. Try a brighter, closer, top-down photograph.';$('foodList').appendChild(p);}
+    items.forEach((item,i)=>{
+      const color=palette[i%palette.length];const row=document.createElement('div');row.className='food-row';
+      const sw=document.createElement('span');sw.className='swatch';sw.style.background=color;
+      const name=document.createElement('div');const title=document.createElement('div');title.className='food-name';title.textContent=item.name || 'Unidentified food';const meta=document.createElement('div');meta.className='food-meta';meta.textContent=Number.isFinite(item.confidence_pct)?`AI confidence ${Math.round(item.confidence_pct)}% · visual estimate`:'AI-detected region · confidence unavailable';name.append(title,meta);
+      const pct=document.createElement('div');pct.className='food-pct';pct.textContent=Number.isFinite(item.surface_pct)?`${clamp(item.surface_pct,0,100).toFixed(1)}%`:'—';const st=document.createElement('div');st.className='food-status';st.textContent='plate surface';pct.appendChild(st);row.append(sw,name,pct);$('foodList').appendChild(row);
+    });
+    $('resultNote').textContent=report.limitations || 'Estimates may vary with lighting, camera angle, food mixing and plate reflections.';
+    const tm=report.performance; $('timingLine').textContent=tm?`Total ${(tm.end_to_end_ms/1000).toFixed(2)}s · API ${(tm.api_elapsed_ms/1000).toFixed(2)}s · prep ${(tm.preprocess_ms/1000).toFixed(2)}s · local mask ${(tm.postprocess_ms/1000).toFixed(2)}s · ${tm.model}`:'';
+    drawOverlay(report); $('emptyState').classList.add('hidden'); $('loadingState').classList.add('hidden'); $('results').style.display='block';
+  }
+  function getApiError(payload,status){
+    const m = payload && payload.error && payload.error.message;
+    if(status===400) return `Gemini rejected the request (400): ${m || 'Check the model and request format.'}`;
+    if(status===401 || status===403) return `Gemini could not authenticate this API key (HTTP ${status}). Check that it is valid and that the Gemini API is enabled for its Google AI Studio project. ${m || ''}`;
+    if(status===404) return `The selected Gemini model or Interactions API is unavailable for this key/project (404). Check model access and API availability in Google AI Studio. ${m || ''}`;
+    if(status===429) return `Gemini rate limit or quota reached (429). Check your AI Studio limits. ${m || ''}`;
+    if(status===503) return `The selected Gemini model is temporarily overloaded (503). ${m || ''}`;
+    if(status===500 || status===502 || status===504) return `Gemini temporarily failed (HTTP ${status}). ${m || 'Please retry.'}`;
+    return m || `Gemini request failed (HTTP ${status}).`;
+  }
+  function extractJsonObject(raw){
+    if(typeof raw !== 'string' || !raw.trim()) throw new Error('Gemini returned an empty response.');
+    const cleaned=raw.trim().replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/i,'').trim();
+    try { return JSON.parse(cleaned); } catch (_) {}
+    const start=cleaned.indexOf('{');
+    if(start<0) throw new Error('Gemini did not return a JSON object. Please retry the scan.');
+    let depth=0, inString=false, escaped=false;
+    for(let i=start;i<cleaned.length;i++){
+      const ch=cleaned[i];
+      if(inString){
+        if(escaped) escaped=false;
+        else if(ch==='\\') escaped=true;
+        else if(ch==='"') inString=false;
+      } else {
+        if(ch==='"') inString=true;
+        else if(ch==='{') depth++;
+        else if(ch==='}'){
+          depth--;
+          if(depth===0){
+            try { return JSON.parse(cleaned.slice(start,i+1)); } catch (_) { break; }
+          }
+        }
+      }
+    }
+    throw new Error('Gemini returned incomplete or malformed JSON. Please retry with a clearer or smaller photo.');
+  }
+
+  async function analyze(){
+    clearError();
+    if(!state.apiKey){showError('Enter your Gemini API key first.');return;}
+    if(!state.imageDataUrl){showError('Take or choose a plate photo first.');return;}
+    state.busy=true; state.modelUsed=''; updateAnalyzeButton();
+    const analysisStart=performance.now();
+    $('emptyState').classList.add('hidden'); $('results').style.display='none'; $('loadingState').classList.remove('hidden');
+
+    const prompt = `You are FoodNova's image-observation engine for a food-leftover study. Analyse the full photograph. Report only observations supported by visible image evidence. Never invent a value to fill a field.
+
+FOOD REGIONS
+- Identify each distinct connected patch of visible edible food remaining on the plate/tray.
+- Return one separate box/mask object per connected patch, even when two patches have the same food name. Never merge separate patches just because their labels match.
+- Recognise Indian foods when supported by shape, texture and context: cooked rice, yellow rice, dal, rajma/bean curry, chole/chana, roti/chapati, sabzi, paneer, potato, curd/raita, salad, pickle, papad, chutney, gravy and mixed curry.
+- Be conservative. If visual evidence cannot distinguish rajma from another bean curry, label it "bean curry, type uncertain". Never infer hidden ingredients from colour alone.
+- Include edible sauces/gravy if clearly food. Exclude plate stains, reflections, glare, shadows, scratches, water, cutlery, napkins, hands and background.
+- If two foods touch and the boundary is not visible, do not create a false dividing boundary. Return one cautious combined label and explain the ambiguity.
+- Set edible_status to "inedible_food_part" only for clearly visible bones, shells, peels or other inedible parts; otherwise use "edible_food" or "uncertain".
+
+OBSERVATION FIELDS FOR EACH FOOD PATCH
+- label: concise visually supported food name.
+- food_category: staple, pulse_legume, vegetable, dairy, protein, sauce_condiment, mixed_dish, other, or uncertain.
+- visual_state: tiny_remnants, small_portion, moderate_portion, large_portion, scattered_or_fragmented, partially_occluded, or uncertain. This is qualitative, not mass.
+- edible_status: edible_food, inedible_food_part, or uncertain.
+- evidence: one short statement describing visible shape/texture/appearance supporting the label.
+- confidence_pct: conservative model self-assessment from 0–100. It is NOT a calibrated statistical probability.
+- mask: ordered [x,y] contour points normalized 0–1000 relative to the complete processed image. Trace the visible outer edge; do not substitute a loose rectangle. Use enough vertices to follow visible curvature, but do not add invented detail.
+- box_2d: [y_min,x_min,y_max,x_max], normalized 0–1000 and tightly enclosing that patch.
+
+PLATE SURFACE
+- Return exactly one special region label "__PLATE_SURFACE__" for the usable inner food-contact surface, excluding rim, table and cutlery.
+- Only return it if the inner boundary is clearly visible. Otherwise set plate_detected=false and do not invent it.
+- For the plate region use food_category="not_applicable", visual_state="not_applicable", edible_status="not_applicable", evidence describing the visible plate boundary, and confidence_pct.
+
+IMAGE QUALITY
+- image_quality must be good, usable, poor or uncertain.
+- Mention blur, reflections/glare, shadows, plate cropping, occlusion, perspective tilt or low contrast in image_quality_notes when they materially affect interpretation.
+
+SCIENTIFIC LIMITS
+- Do NOT report grams, calories, volume, physical area, consumed amount or percentage of original serving wasted. These require weighing, scale/depth calibration, or before-and-after mass measurements.
+- Do NOT calculate area percentages; the application rasterizes returned contours and computes visible plate-surface coverage locally.
+- Do not claim model confidence is a measured probability or that this result is scientifically validated.
+- Return only schema-valid JSON. Include a concise summary and explicit limitations.`;
+
+
+
+    const imageParts=state.imageDataUrl.split(',');
+    const mimeType=(imageParts[0].match(/data:(.*?);base64/)||[,'image/jpeg'])[1];
+    const imageBase64=imageParts[1];
+    const requestBody={
+      model:ANALYSIS_MODEL,
+      input:[
+        {type:'text',text:prompt},
+        {type:'image',data:imageBase64,mime_type:mimeType}
+      ],
+      response_format:{type:'text',mime_type:'application/json',schema},
+      generation_config:{max_output_tokens:6000,thinking_level:'low'},
+      store:false
+    };
+    const apiStarted=performance.now();
+    const transient=status=>[408,429,500,502,503,504].includes(status);
+    let lastError=null;
+    try{
+      for(let attempt=0;attempt<2;attempt++){
+        try{
+          $('loadingState').querySelector('strong').textContent=attempt===0?'Segmenting food regions…':'Retrying Gemini segmentation once…';
+          const controller=new AbortController();
+          const timeout=setTimeout(()=>controller.abort(),35000);
+          let response;
+          try{
+            response=await fetch('https://generativelanguage.googleapis.com/v1beta/interactions',{ 
+              method:'POST',
+              headers:{'Content-Type':'application/json','x-goog-api-key':state.apiKey,'Api-Revision':'2026-05-20'},
+              body:JSON.stringify(requestBody),
+              signal:controller.signal
+            });
+          } finally { clearTimeout(timeout); }
+          const payload=await response.json().catch(()=>({}));
+          if(!response.ok){const err=new Error(getApiError(payload,response.status));err.status=response.status;throw err;}
+          const apiMs=Math.round(performance.now()-apiStarted);
+          const responseText=extractOutputText(payload);
+          if(payload.status && payload.status!=='completed'){
+            const detail=payload.status==='incomplete'?'The model stopped before completing the segmentation output. Try a less cluttered, fully visible plate photo.':`The model interaction finished with status "${payload.status}".`;
+            throw new Error(detail);
+          }
+          if(!responseText) throw new Error('Gemini returned no readable segmentation output. Please retry with a clear, top-down photograph.');
+          let raw;
+          try{raw=extractJsonObject(responseText);}catch(parseError){
+            if(/token|incomplete/i.test(responseText)) throw new Error('The segmentation output may have been truncated. Try a less cluttered plate photo.');
+            throw parseError;
+          }
+          if(!raw||!Array.isArray(raw.boxes)) throw new Error('The segmentation model did not return a valid region list. Please retry.');
+          const localMaskStarted=performance.now();
+          const normalized=normalizeSegmentation(raw);
+          const localMaskMs=Math.round(performance.now()-localMaskStarted);
+          if(!normalized.food_items.length && !normalized.plate_or_tray_detected){
+            normalized.summary=raw.summary||'No food region or usable plate surface was confidently identified.';
+            normalized.limitations += ' This is retained as an analysis record with no food-region detections; it must not be interpreted as proof that the plate is empty.';
+          }
+          state.modelUsed=ANALYSIS_MODEL;
+          normalized.performance={
+            provider:'Google Gemini API',
+            model:ANALYSIS_MODEL,
+            api_surface:'Gemini Interactions API',
+            prompt_version:'foodnova-food-region-study-v1.0',
+            response_schema_version:'foodnova-contour-schema-v1.0',
+            api_revision:'2026-05-20',
+            api_elapsed_ms:apiMs,
+            preprocess_ms:state.imagePreprocessMs||0,
+            postprocess_ms:localMaskMs,
+            end_to_end_ms:Math.round(performance.now()-analysisStart),
+            output_characters:responseText.length,
+            image_dimensions:$('fileInfo').textContent,
+            retry_attempts:attempt+1,
+            api_usage:payload.usage||payload.usage_metadata||null
+          };
+          normalized.image_metadata={
+            file_name:state.fileName,
+            original_mime_type:state.originalMimeType,
+            original_file_size_bytes:state.originalFileSizeBytes,
+            original_width_px:state.originalWidth,
+            original_height_px:state.originalHeight,
+            processed_mime_type:'image/jpeg',
+            processed_width_px:state.processedWidth,
+            processed_height_px:state.processedHeight,
+            processed_image_size_bytes:state.processedImageBytes,
+            resize_scale:state.resizeScale,
+            jpeg_quality:0.92,
+            uploaded_at_utc:state.uploadedAtUtc
+          };
+          const reportCreatedAt=new Date();
+          normalized.report_metadata={
+            schema_version:'FoodNova Scientific CSV v1.0',
+            generated_at_utc:reportCreatedAt.toISOString(),
+            generated_at_local:reportCreatedAt.toLocaleString(),
+            timezone:Intl.DateTimeFormat().resolvedOptions().timeZone||'unknown',
+            model_output_review:'NOT_HUMAN_VALIDATED',
+            measurement_protocol:'IMAGE_PLANE_AREA_ONLY'
+          };
+          renderReport(normalized);
+          return;
+        }catch(err){
+          lastError=err;
+          if(err.name==='AbortError') throw new Error('Food segmentation exceeded 35 seconds. Try a smaller or clearer photo, or retry when the service is less busy.');
+          if(!(transient(err.status)&&attempt===0)) throw err;
+          await new Promise(resolve=>setTimeout(resolve,350));
+        }
+      }
+      throw lastError||new Error('Gemini segmentation is temporarily unavailable. Please retry.');
+    }catch(err){
+      $('loadingState').classList.add('hidden'); $('emptyState').classList.remove('hidden');
+      let msg=err&&err.message?err.message:'Unknown error while analysing the image.';
+      if(err instanceof TypeError&&/fetch/i.test(msg)) msg='The browser could not reach Gemini. Check your internet connection and try again.';
+      if(err&&transient(err.status)) msg='Gemini is temporarily busy. FoodNova made one quick retry; please try again shortly.';
+      showError(msg);
+    }finally{
+      state.busy=false;
+      $('loadingState').querySelector('strong').textContent='Running vision inference…';
+      updateAnalyzeButton();
+    }
+  }
+  $('analyzeBtn').addEventListener('click',analyze);
+  function download(filename,text,mime){const blob=new Blob([text],{type:mime});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
+  function csvEscape(value){
+    if(value===null || value===undefined) return '';
+    const v=typeof value==='object'?JSON.stringify(value):String(value);
+    return '"' + v.replace(/"/g,'""') + '"';
+  }
+  function buildScientificCsv(report){
+    const now=new Date();
+    const m=report.measurement||{};
+    const p=report.performance||{};
+    const im=report.image_metadata||{};
+    const regions=Array.isArray(report.food_items)?report.food_items:[];
+    const header=[
+      'record_type','report_schema_version','analysis_id','analysis_timestamp_utc','analysis_timestamp_local',
+      'timezone','study_id_manual','sample_id_manual','participant_code_manual','meal_type_manual','plate_id_manual','operator_code_manual',
+      'provider','model_id','api_surface','prompt_version','response_schema_version','api_revision','model_output_review_status',
+      'image_filename','image_original_mime_type','image_original_file_size_bytes','image_original_width_px','image_original_height_px',
+      'image_processed_mime_type','image_processed_file_size_bytes','image_processed_width_px','image_processed_height_px','image_resize_scale','image_jpeg_quality',
+      'image_quality_assessment','image_quality_notes',
+      'upload_to_analysis_preprocess_ms','api_elapsed_ms','local_postprocess_ms','end_to_end_ms','model_output_characters','retry_attempts','api_usage_metadata_json',
+      'plate_detected','plate_surface_polygon_present','plate_surface_area_raster_px','measurement_raster_width_px','measurement_raster_height_px',
+      'plate_surface_area_pct_of_full_raster','food_region_count','unique_food_label_count','food_union_area_raster_px',
+      'food_surface_coverage_pct_of_plate','uncovered_plate_surface_pct','sum_of_individual_region_area_pct','sum_of_region_overlap_area_raster_px','overlap_union_area_raster_px','plate_mask_confidence_pct','plate_polygon_normalized_json',
+      'measurement_method','geometry_type','calibration_status','physical_area_cm2','food_mass_g','food_volume_ml','food_energy_kcal',
+      'original_serving_mass_g','consumed_mass_g','waste_mass_pct','pre_meal_served_food_mass_g_manual','post_meal_edible_leftover_mass_g_manual','post_meal_inedible_residue_mass_g_manual','scale_id_manual','scale_resolution_g_manual','physical_measurement_status','physical_measurement_limitation','manual_food_label_review_status','manual_mask_review_status','manual_reviewer_code',
+      'region_id','region_index','food_label','food_category','visual_state','edible_status','visual_evidence',
+      'model_confidence_pct','confidence_interpretation','region_area_raster_px','region_area_pct_of_plate',
+      'region_unique_area_raster_px','region_overlap_area_raster_px','region_overlap_pct','region_share_of_food_union_pct',
+      'region_area_outside_plate_raster_px','region_contour_vertex_count','source_box_2d_json','bbox_x_min_normalized_0_1000','bbox_y_min_normalized_0_1000',
+      'bbox_x_max_normalized_0_1000','bbox_y_max_normalized_0_1000','bbox_x_min_source_px','bbox_y_min_source_px','bbox_x_max_source_px','bbox_y_max_source_px',
+      'polygon_coordinates_normalized_json','polygon_wkt_normalized','region_note','limitations'
+    ];
+    const uniqueLabels=[...new Set(regions.map(x=>String(x.name||'').trim()).filter(Boolean))];
+    const common={
+      report_schema_version:(report.report_metadata&&report.report_metadata.schema_version)||'FoodNova Scientific CSV v1.0',
+      analysis_id:report.analysis_id||'',
+      analysis_timestamp_utc:(report.report_metadata&&report.report_metadata.generated_at_utc)||now.toISOString(),
+      analysis_timestamp_local:(report.report_metadata&&report.report_metadata.generated_at_local)||now.toLocaleString(),
+      timezone:(report.report_metadata&&report.report_metadata.timezone)||Intl.DateTimeFormat().resolvedOptions().timeZone||'unknown',
+      study_id_manual:'',
+      sample_id_manual:'',
+      participant_code_manual:'',
+      meal_type_manual:'',
+      plate_id_manual:'',
+      operator_code_manual:'',
+      provider:p.provider||'Google Gemini API',
+      model_id:p.model||ANALYSIS_MODEL,
+      api_surface:p.api_surface||'Gemini Interactions API',
+      prompt_version:'foodnova-food-region-study-v1.0',
+      response_schema_version:'foodnova-contour-schema-v1.0',
+      api_revision:'2026-05-20',
+      model_output_review_status:(report.report_metadata&&report.report_metadata.model_output_review)||'NOT_HUMAN_VALIDATED',
+      image_filename:im.file_name||state.fileName,
+      image_original_mime_type:im.original_mime_type||state.originalMimeType,
+      image_original_file_size_bytes:im.original_file_size_bytes??state.originalFileSizeBytes,
+      image_original_width_px:im.original_width_px??state.originalWidth,
+      image_original_height_px:im.original_height_px??state.originalHeight,
+      image_processed_mime_type:im.processed_mime_type||'image/jpeg',
+      image_processed_file_size_bytes:im.processed_image_size_bytes??state.processedImageBytes,
+      image_processed_width_px:im.processed_width_px??state.processedWidth,
+      image_processed_height_px:im.processed_height_px??state.processedHeight,
+      image_resize_scale:im.resize_scale??state.resizeScale,
+      image_jpeg_quality:im.jpeg_quality??0.92,
+      image_quality_assessment:report.image_quality||'uncertain',
+      image_quality_notes:report.image_quality_notes||'',
+      upload_to_analysis_preprocess_ms:p.preprocess_ms??state.imagePreprocessMs,
+      api_elapsed_ms:p.api_elapsed_ms??'',
+      local_postprocess_ms:p.postprocess_ms??'',
+      end_to_end_ms:p.end_to_end_ms??'',
+      model_output_characters:p.output_characters??'',
+      retry_attempts:p.retry_attempts??'',
+      api_usage_metadata_json:p.api_usage||'',
+      plate_detected:!!report.plate_or_tray_detected,
+      plate_surface_polygon_present:Number(m.plate_area_raster_px)>0,
+      plate_surface_area_raster_px:m.plate_area_raster_px??'',
+      measurement_raster_width_px:m.raster_width_px??'',
+      measurement_raster_height_px:m.raster_height_px??'',
+      plate_surface_area_pct_of_full_raster:m.plate_area_pct_of_full_raster??'',
+      food_region_count:regions.length,
+      unique_food_label_count:uniqueLabels.length,
+      food_union_area_raster_px:m.food_union_area_raster_px??'',
+      food_surface_coverage_pct_of_plate:m.plate_surface_covered_pct??'',
+      uncovered_plate_surface_pct:m.plate_surface_uncovered_pct??'',
+      sum_of_individual_region_area_pct:m.sum_of_region_area_pct??'',
+      sum_of_region_overlap_area_raster_px:m.sum_of_region_overlap_area_raster_px??'',
+      overlap_union_area_raster_px:m.overlap_union_area_raster_px??'',
+      plate_mask_confidence_pct:m.plate_mask_confidence_pct??'',
+      plate_polygon_normalized_json:report.plate_polygon||'',
+      measurement_method:m.method||'Not available',
+      geometry_type:'AI-generated polygon contours; locally rasterized',
+      calibration_status:m.calibration_status||'NOT_CALIBRATED',
+      physical_area_cm2:m.physical_area_cm2??'',
+      food_mass_g:m.mass_g??'',
+      food_volume_ml:m.volume_ml??'',
+      food_energy_kcal:m.energy_kcal??'',
+      original_serving_mass_g:m.original_serving_mass_g??'',
+      consumed_mass_g:m.consumed_mass_g??'',
+      waste_mass_pct:m.waste_mass_pct??'',
+      pre_meal_served_food_mass_g_manual:'',
+      post_meal_edible_leftover_mass_g_manual:'',
+      post_meal_inedible_residue_mass_g_manual:'',
+      scale_id_manual:'',
+      scale_resolution_g_manual:'',
+      physical_measurement_status:'NOT_MEASURED',
+      physical_measurement_limitation:m.physical_measurements_note||'Requires a scale, dimensional/depth calibration, and pre/post-serving measurements.',
+      manual_food_label_review_status:'NOT_REVIEWED',
+      manual_mask_review_status:'NOT_REVIEWED',
+      manual_reviewer_code:'',
+      limitations:report.limitations||''
+    };
+    const buildRow=(region,index)=>{
+      const b=region&&region.bounding_box_normalized||{};
+      const bp=region&&region.bounding_box_source_pixels||{};
+      const stat=region&&region.measurements||{};
+      const record={
+        ...common,
+        record_type:region?'FOOD_REGION':'ANALYSIS_ONLY',
+        region_id:region?.region_id||'',
+        region_index:region?index+1:'',
+        food_label:region?.name||'',
+        food_category:region?.food_category||'',
+        visual_state:region?.visual_state||'',
+        edible_status:region?.edible_status||'',
+        visual_evidence:region?.evidence||'',
+        model_confidence_pct:region?.confidence_pct??'',
+        confidence_interpretation:region?.confidence_interpretation||'Model-reported visual confidence; not statistically calibrated',
+        region_area_raster_px:stat.area_raster_px??'',
+        region_area_pct_of_plate:stat.area_pct_of_plate??'',
+        region_unique_area_raster_px:stat.unique_area_raster_px??'',
+        region_overlap_area_raster_px:stat.overlap_area_raster_px??'',
+        region_overlap_pct:stat.overlap_pct_of_region??'',
+        region_share_of_food_union_pct:stat.share_of_union_pct??'',
+        region_area_outside_plate_raster_px:stat.outside_plate_area_raster_px??'',
+        region_contour_vertex_count:region?.contour_vertex_count??'',
+        source_box_2d_json:region?.source_box_2d||'',
+        bbox_x_min_normalized_0_1000:b.x_min_norm??'',
+        bbox_y_min_normalized_0_1000:b.y_min_norm??'',
+        bbox_x_max_normalized_0_1000:b.x_max_norm??'',
+        bbox_y_max_normalized_0_1000:b.y_max_norm??'',
+        bbox_x_min_source_px:bp.x_min??'',
+        bbox_y_min_source_px:bp.y_min??'',
+        bbox_x_max_source_px:bp.x_max??'',
+        bbox_y_max_source_px:bp.y_max??'',
+        polygon_coordinates_normalized_json:region?.polygons||'',
+        polygon_wkt_normalized:region?.polygons?.[0]?.length?`POLYGON((${region.polygons[0].map(pt=>`${Number(pt.x).toFixed(3)} ${Number(pt.y).toFixed(3)}`).concat([`${Number(region.polygons[0][0].x).toFixed(3)} ${Number(region.polygons[0][0].y).toFixed(3)}`]).join(', ')}))`:'',
+        region_note:region?`Region-level image-plane area estimate; not mass or volume.`:'No food region returned by model.'
+      };
+      return header.map(k=>csvEscape(record[k]??'')).join(',');
+    };
+    const lines=[header.map(csvEscape).join(',')];
+    if(regions.length) regions.forEach((r,i)=>lines.push(buildRow(r,i)));
+    else lines.push(buildRow(null,-1));
+    return '\uFEFF'+lines.join('\r\n')+'\r\n';
+  }
+  $('downloadJson').addEventListener('click',()=>{
+    if(!state.report)return;
+    download('foodnova-scientific-analysis.json',JSON.stringify({
+      report_schema_version:'FoodNova Scientific Report v1.0',
+      file:state.fileName,model:state.modelUsed||ANALYSIS_MODEL,
+      created_at:new Date().toISOString(),image_metadata:state.report.image_metadata||{},
+      report:state.report
+    },null,2),'application/json');
+  });
+  $('downloadCsv').addEventListener('click',()=>{
+    if(!state.report)return;
+    download('FoodNova_Scientific_FoodWaste_Report.csv',buildScientificCsv(state.report),'text/csv;charset=utf-8');
+  });
+
+  const FOODNOVA_FIELD_GUIDE = `FOODNOVA SCIENTIFIC CSV — FIELD GUIDE
+Schema version: FoodNova Scientific CSV v1.0
+
+ROW STRUCTURE
+- One FOOD_REGION row per distinct connected food patch, not one row per food label.
+- ANALYSIS_ONLY row is retained when no food region is returned, so empty/uncertain samples are not silently discarded.
+- Analysis-level fields repeat on every region row so the CSV remains a single flat, filterable table.
+
+ANALYSIS / PROVENANCE
+- analysis_id: unique ID for this image-analysis run.
+- analysis_timestamp_utc/local, timezone: report creation time and browser timezone.
+- study_id_manual, sample_id_manual, participant_code_manual, meal_type_manual, plate_id_manual, operator_code_manual: blank researcher-entry fields.
+- provider, model_id, api_surface: inference service and model route.
+- image_*: source and processed file properties. Processed image is JPEG quality 0.92; byte count is calculated from the browser's encoded data URL.
+- *_ms fields: browser-measured preprocessing, API elapsed, local raster-mask processing and end-to-end elapsed time. API elapsed may include the single transient retry if one occurred.
+- api_usage_metadata_json: returned provider usage metadata, if present; blank if not supplied.
+
+IMAGE-PLANE GEOMETRY
+- mask / polygon coordinates are model-generated contour coordinates normalized to 0–1000 against the full processed image.
+- geometry_type: AI-generated polygon contours, rasterized locally. This is not a native model pixel mask.
+- raster_width_px and raster_height_px: measurement grid dimensions; longest side is at most 1024 and source aspect ratio is preserved.
+- *_raster_px fields: counts of cells in that raster, NOT native sensor pixels and NOT physical area.
+- plate_surface_area_raster_px: rasterized usable inner-plate polygon cell count.
+- food_union_area_raster_px: unique raster cells covered by at least one food region, clipped to the plate polygon.
+- food_surface_coverage_pct_of_plate: 100 × food union cells / plate-surface cells.
+- uncovered_plate_surface_pct: 100 minus food-surface coverage.
+- region_area_pct_of_plate: individual region raster cells / plate-surface cells. Region percentages may sum to more than union coverage if masks overlap.
+- region_unique_area_raster_px: region pixels not shared with any other region.
+- region_overlap_area_raster_px / region_overlap_pct: pixels in this region also covered by one or more other food-region polygons.
+- overlap_union_area_raster_px: distinct plate raster cells covered by at least two region polygons (each shared cell counted once).
+- polygon_coordinates_normalized_json: normalized contour points as JSON.
+- polygon_wkt_normalized: WKT polygon using normalized 0–1000 x/y coordinates; not geographic coordinates.
+- source_box_2d_json: original model box_2d in [y_min,x_min,y_max,x_max] normalized 0–1000 coordinates.
+- bbox_*_normalized: bounds calculated from the returned polygon in normalized 0–1000 coordinates; bbox_*_source_px: corresponding coordinates in processed-image pixels.
+
+FOOD OBSERVATIONS
+- food_label, food_category, visual_state, edible_status, visual_evidence: model-reported visible observations.
+- model_confidence_pct: model self-reported confidence. It is NOT a statistically calibrated probability.
+- image_quality_assessment and image_quality_notes: model-reported image quality.
+
+SCIENTIFIC VALIDITY / LIMITATIONS
+- model_output_review_status and manual_* fields: explicitly indicate that the output has not been human reviewed.
+- calibration_status = NOT_CALIBRATED: no physical scale or geometric calibration target was provided.
+- physical_area_cm2, food_mass_g, food_volume_ml, food_energy_kcal, original_serving_mass_g, consumed_mass_g and waste_mass_pct are blank unless independently measured. This app does not infer them from the image.
+- pre_meal_served_food_mass_g_manual, post_meal_edible_leftover_mass_g_manual, post_meal_inedible_residue_mass_g_manual, scale_id_manual and scale_resolution_g_manual are blank entry fields for measurements collected with a calibrated scale.
+- To calculate edible-leftover mass percentage from actual weights: 100 × post_meal_edible_leftover_mass_g / pre_meal_served_food_mass_g. This requires matching tare/plate treatment and a defined protocol. Consumed mass is not automatically inferred from a photo.
+- The visual coverage percentage is NOT percentage of original food wasted and must not be reported as mass waste.
+- No model accuracy, precision, recall, IoU or confidence interval is claimed. Those require a manually annotated validation dataset and a defined evaluation protocol.
+
+RECOMMENDED VALIDATION
+Collect a representative set of plates with independently annotated food labels and polygon masks. Compare food classification accuracy, per-class precision/recall, segmentation IoU/Dice, plate-mask IoU, and absolute coverage error against human reference masks. Repeat scans under controlled camera height, angle, lighting, plate type and food arrangements.`;
+  $('downloadDictionary').addEventListener('click',()=>{
+    download('FoodNova_Scientific_CSV_Field_Guide.txt',FOODNOVA_FIELD_GUIDE,'text/plain;charset=utf-8');
+  });
+})();
+</script>
+</body>
+</html>
